@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>404 — page not found · Yassir Zahidi</title>
+  <meta name="description" content="The page you tried to reach doesn't exist on y-zahidi.github.io. Head back to the portfolio." />
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#0a0e14" />
+  <meta name="color-scheme" content="dark" />
+  <link rel="canonical" href="https://y-zahidi.github.io/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/style.css" />
+  <style>
+    main.error {
+      min-height: calc(100vh - 80px);
+      display: grid; place-items: center;
+      padding: 2rem 1.25rem;
+    }
+    .error-card {
+      max-width: 720px; width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .error-card .term-header {
+      display: flex; align-items: center; gap: .55rem;
+      padding: .85rem 1.1rem;
+      background: var(--bg-2);
+      border-bottom: 1px solid var(--border);
+      font-family: var(--mono); font-size: .8rem; color: var(--fg-mute);
+    }
+    .term-dot { width: 11px; height: 11px; border-radius: 50%; background: #2a3340 }
+    .term-dot.r { background: #ff6b8b }
+    .term-dot.y { background: #ffb86b }
+    .term-dot.g { background: var(--accent) }
+    .term-title { margin-left: .8rem }
+    .error-body { padding: 2rem 2rem 1.5rem }
+    .glitch {
+      font-family: var(--mono); font-size: clamp(3.5rem, 14vw, 7rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      letter-spacing: -.04em; line-height: 1; margin: 0 0 1rem;
+    }
+    .lede { font-size: 1.15rem; color: var(--fg); margin: 0 0 .35rem }
+    .sub { font-family: var(--mono); color: var(--fg-mute); font-size: .9rem; margin: 0 0 1.75rem }
+    .sub .ok { color: var(--accent) }
+    .err-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.5rem }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .65rem 1rem;
+      border-radius: 8px;
+      font-family: var(--mono); font-size: .9rem; font-weight: 500;
+      border: 1px solid var(--border-strong);
+      background: transparent; color: var(--fg);
+      transition: all .15s ease;
+    }
+    .btn:hover { border-color: var(--accent); color: var(--accent); text-decoration: none }
+    .btn.primary { background: var(--accent); color: var(--bg); border-color: var(--accent) }
+    .btn.primary:hover { background: transparent; color: var(--accent) }
+    .quick {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px dashed var(--border);
+      font-family: var(--mono); font-size: .85rem;
+      color: var(--fg-mute);
+    }
+    .quick a { display: inline-block; margin-right: 1rem; color: var(--fg-dim) }
+    .quick a::before { content: "→ "; color: var(--accent); opacity: .6 }
+    .quick a:hover { color: var(--accent) }
+    .footer { padding: 1rem 2rem; color: var(--fg-mute); font-size: .8rem; font-family: var(--mono); text-align: center }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="/" class="brand" aria-label="home">
+      <span class="brand-mark">YZ</span>
+      <span class="brand-name">yassir-zahidi</span>
+    </a>
+    <nav class="nav" aria-label="primary">
+      <a href="/#about">about</a>
+      <a href="/#projects">projects</a>
+      <a href="/#stack">stack</a>
+      <a href="/#contact">contact</a>
+    </nav>
+    <a class="cv-btn" href="/assets/cv-en.pdf" download>Download CV</a>
+  </header>
+
+  <main class="error">
+    <div class="error-card">
+      <div class="term-header" role="presentation">
+        <span class="term-dot r" aria-hidden="true"></span>
+        <span class="term-dot y" aria-hidden="true"></span>
+        <span class="term-dot g" aria-hidden="true"></span>
+        <span class="term-title">/var/log/y-zahidi.github.io/access.log</span>
+      </div>
+      <div class="error-body">
+        <h1 class="glitch" aria-label="Error 404">404</h1>
+        <p class="lede">This route never made it to the production index.</p>
+        <p class="sub">$ <span class="ok">curl</span> -I <span id="bad-url">https://y-zahidi.github.io/&lt;unknown&gt;</span> &nbsp;→ &nbsp;<span style="color:var(--bad)">HTTP/1.1 404 Not Found</span></p>
+
+        <div class="err-actions">
+          <a class="btn primary" href="/">cd ~/portfolio</a>
+          <a class="btn" href="/#projects">ls -la projects/</a>
+          <a class="btn" href="https://github.com/y-zahidi" target="_blank" rel="noopener">github @y-zahidi</a>
+        </div>
+
+        <div class="quick">
+          quick links:
+          <a href="/#about">about</a>
+          <a href="/#projects">projects</a>
+          <a href="/#stack">stack</a>
+          <a href="/#certs">certs</a>
+          <a href="/#contact">contact</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">© <span id="year"></span> Yassir Zahidi · <span style="color:var(--accent)">$ exit 1</span></footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    const bad = document.getElementById("bad-url");
+    if (bad) bad.textContent = "https://y-zahidi.github.io" + (location.pathname || "/<unknown>");
+  </script>
+</body>
+</html>
