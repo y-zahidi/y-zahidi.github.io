@@ -702,11 +702,42 @@ let openCmdline, closeCmdline;
     'mail':       () => { location.href = 'mailto:yassirzahidi8@gmail.com'; },
     'cv':         () => window.open('assets/cv-en.pdf', '_blank', 'noopener'),
     'print':      () => window.print(),
+    'playground': () => goRoute({ id: '#playground' }),
+    'pg':         () => goRoute({ id: '#playground' }),
+    'compiler':   () => goRoute({ id: '#playground' }),
+    'heatmap':    () => goRoute({ id: '#heatmap' }),
+    'hm':         () => goRoute({ id: '#heatmap' }),
     'flag':       () => setHint('YZ{cmdline_3rd_flag_purple_loop_ftw}'),
+    'ask':        (a) => askTopic(a),
     'reset':      () => { try { ['yz.theme','yz.boot','yz.liveops'].forEach((k) => localStorage.removeItem(k)); } catch (_) {} setHint('reset — reload to replay boot'); },
     'q':          () => closeCmdline(),
     'quit':       () => closeCmdline(),
   };
+
+  /* ── :ask topic dispatcher ── curated answers, 100% local ── */
+  const ASK = {
+    'stack':       'detect: wazuh + suricata + sysmon + sigma · attack: nmap/burp/metasploit/bloodhound/impacket · purple: atomic-red-team + sigma-pipeline · dev: c++/php/js, docker, git',
+    'oscp':        'oscp track in flight — buffer-overflow refresh + AD chains weekly. lab time clocks ~6 hrs/week. exam date: open.',
+    'mttd':        'mttd ~30s on the lab against atomic-red-team baseline. mttr <5min for tier-1 alerts. measured per closure, not assumed.',
+    'mttr':        'mttr median <5min in the lab — playbooked alerts auto-enrich (misp + virustotal) before human triage. real production at préfecture: 7min p50.',
+    'internship':  'open. soc · detection · pentest · purple-team. remote / EU / Morocco. inbox: yassirzahidi8@gmail.com.',
+    'internships': 'open. soc · detection · pentest · purple-team. remote / EU / Morocco. inbox: yassirzahidi8@gmail.com.',
+    'available':   'open. start date: open. timezone: Africa/Casablanca but flexible.',
+    'salary':      'open — depends on role / scope / stack. happy to discuss after a 1st screen.',
+    'cv':          'cv-en.pdf — type :cv to download. one page, dense, no fluff.',
+    'blue':        '14 sigma rules authored, 6213 wazuh rules tuned at préfecture, 13 cybersec certs current, mttd<60s on lab.',
+    'red':         'oscp track + htb/thm boxes weekly + AD attack chains in lab. cheatsheet repo public. self-pentest doc public.',
+    'purple':      '22 atomic-red-team tests in rotation, 8 red→blue closures shipped, validation loop documented per closure.',
+    'flag':        'three flags total: source comment · konami war-room · this cmdline. you have :flag from here.',
+    'help':        'topics: stack · oscp · mttd · mttr · internship · available · salary · cv · blue · red · purple · flag',
+    'topics':      'topics: stack · oscp · mttd · mttr · internship · available · salary · cv · blue · red · purple · flag',
+  };
+  function askTopic(t) {
+    if (!t) { setHint('ask <topic> — try: ' + Object.keys(ASK).slice(0, 6).join(' / ')); return; }
+    const ans = ASK[t.toLowerCase()];
+    if (ans) setHint('ask ' + t.toLowerCase() + ' → ' + ans);
+    else setHint('no answer for ' + t + '. try: ' + Object.keys(ASK).slice(0, 6).join(' / '));
+  }
   openCmdline = () => {
     cl.hidden = false; inp.value = ''; setHint('type help');
     setTimeout(() => inp.focus(), 0);
@@ -720,7 +751,7 @@ let openCmdline, closeCmdline;
       if (!raw) { closeCmdline(); return; }
       const [name, ...rest] = raw.split(/\s+/);
       const cmd = COMMANDS[name.toLowerCase()];
-      if (cmd) { cmd(rest[0]); if (!['help', 'theme', 'flag', 'reset'].includes(name.toLowerCase())) closeCmdline(); }
+      if (cmd) { cmd(rest[0]); if (!['help', 'theme', 'flag', 'reset', 'ask'].includes(name.toLowerCase())) closeCmdline(); }
       else { setHint('not a command: ' + name); }
     }
     if (e.key === 'Tab') {
@@ -761,4 +792,698 @@ let openCmdline, closeCmdline;
       if (i === seq.length) { i = 0; open(); }
     } else { i = (k === seq[0] ? 1 : 0); }
   });
+})();
+
+/* ════════════════════════════════════════════════════════════
+ * v2.1 — Sigma → multi-engine playground (live, in-browser, 0 deps)
+ * Subset of Sigma supported: top-level keys (title/id/description/level/
+ * tags), logsource (product/service/category), detection.selection block
+ * with field|modifier: scalar OR list, condition: selection.
+ * ──────────────────────────────────────────────────────────── */
+(() => {
+  const ta       = document.getElementById('pgSigma');
+  const sel      = document.getElementById('pgExample');
+  const status   = document.getElementById('pgStatus');
+  const inMeta   = document.getElementById('pgIn');
+  const outW     = document.getElementById('pgWazuh');
+  const outS     = document.getElementById('pgSplunk');
+  const outK     = document.getElementById('pgKql');
+  const outU     = document.getElementById('pgSuricata');
+  const tabsEl   = document.querySelector('.pg-tabs');
+  const panesEl  = document.querySelector('.pg-panes');
+  const copyBtn  = document.getElementById('pgCopy');
+  if (!ta || !sel) return;
+
+  /* ─── curated examples ─── */
+  const EXAMPLES = {
+    lsass: [
+      "title: LSASS Memory Dump via comsvcs.dll",
+      "id: yz-2026-001",
+      "description: Detects LSASS process memory dump via comsvcs.dll MiniDump export (T1003.001)",
+      "status: experimental",
+      "author: Yassir Zahidi",
+      "date: 2026/05/01",
+      "tags:",
+      "  - attack.t1003.001",
+      "  - attack.credential_access",
+      "logsource:",
+      "  product: windows",
+      "  category: process_creation",
+      "detection:",
+      "  selection:",
+      "    Image|endswith: '\\rundll32.exe'",
+      "    CommandLine|contains:",
+      "      - 'comsvcs.dll'",
+      "      - 'MiniDump'",
+      "  condition: selection",
+      "level: high",
+    ].join('\n'),
+    psencoded: [
+      "title: PowerShell Encoded Command",
+      "id: yz-2026-002",
+      "description: Detects PowerShell -enc / -encodedcommand usage (T1059.001 + T1027)",
+      "status: experimental",
+      "author: Yassir Zahidi",
+      "date: 2026/04/22",
+      "tags:",
+      "  - attack.t1059.001",
+      "  - attack.execution",
+      "  - attack.defense_evasion",
+      "logsource:",
+      "  product: windows",
+      "  category: process_creation",
+      "detection:",
+      "  selection:",
+      "    Image|endswith: '\\powershell.exe'",
+      "    CommandLine|contains:",
+      "      - ' -enc '",
+      "      - ' -encodedcommand '",
+      "      - ' -ec '",
+      "  condition: selection",
+      "level: medium",
+    ].join('\n'),
+    kerberoast: [
+      "title: Kerberoasting Service Ticket Request",
+      "id: yz-2026-003",
+      "description: RC4-encrypted Kerberos service tickets — common kerberoast indicator (T1558.003)",
+      "status: experimental",
+      "author: Yassir Zahidi",
+      "date: 2026/04/14",
+      "tags:",
+      "  - attack.t1558.003",
+      "  - attack.credential_access",
+      "logsource:",
+      "  product: windows",
+      "  service: security",
+      "detection:",
+      "  selection:",
+      "    EventID: 4769",
+      "    TicketEncryptionType: '0x17'",
+      "    TicketOptions|contains: '0x40810000'",
+      "  condition: selection",
+      "level: high",
+    ].join('\n'),
+    suspdns: [
+      "title: Suspicious DNS — DoH provider or sketchy TLD",
+      "id: yz-2026-004",
+      "description: Catches DNS-over-HTTPS providers + sketchy TLDs / DGA fingerprints (T1071.004)",
+      "status: experimental",
+      "author: Yassir Zahidi",
+      "date: 2026/03/30",
+      "tags:",
+      "  - attack.t1071.004",
+      "  - attack.command_and_control",
+      "logsource:",
+      "  category: dns",
+      "detection:",
+      "  selection:",
+      "    QueryName|contains:",
+      "      - 'cloudflare-dns.com'",
+      "      - 'mozilla.cloudflare-dns.com'",
+      "      - 'dns.google'",
+      "      - '.zip'",
+      "      - '.tk'",
+      "  condition: selection",
+      "level: medium",
+    ].join('\n'),
+    impossibletravel: [
+      "title: Okta Impossible Travel — successful login",
+      "id: yz-2026-005",
+      "description: User logs in successfully from > 1000km away in < 60 min (T1078)",
+      "status: experimental",
+      "author: Yassir Zahidi",
+      "date: 2026/02/18",
+      "tags:",
+      "  - attack.t1078",
+      "  - attack.initial_access",
+      "logsource:",
+      "  product: okta",
+      "  service: signin",
+      "detection:",
+      "  selection:",
+      "    eventType: 'user.session.start'",
+      "    outcome.result: 'SUCCESS'",
+      "  condition: selection",
+      "level: high",
+    ].join('\n'),
+  };
+
+  /* ─── tiny YAML subset parser ─── */
+  function parseSigma(text) {
+    const out = {
+      title: '', id: '', description: '', author: '', level: 'medium',
+      tags: [], logsource: {}, selection: {}, condition: 'selection',
+    };
+    const lines = String(text || '').replace(/\r\n/g, '\n').split('\n');
+    let mode = null;     // null | tags | logsource | detection | selection
+    let lastField = null;
+    for (const raw of lines) {
+      if (!raw.trim() || raw.trim().startsWith('#')) continue;
+      // top-level (no leading whitespace)
+      if (/^[A-Za-z]/.test(raw)) {
+        const m = raw.match(/^([\w-]+):\s*(.*)$/);
+        if (!m) { mode = null; lastField = null; continue; }
+        const [, key, val] = m;
+        if (key === 'tags')        { mode = 'tags';       lastField = null; continue; }
+        if (key === 'logsource')   { mode = 'logsource';  lastField = null; continue; }
+        if (key === 'detection')   { mode = 'detection';  lastField = null; continue; }
+        if (key === 'falsepositives' || key === 'references') { mode = null; lastField = null; continue; }
+        if (val !== '') {
+          if (key === 'title')       out.title = stripQ(val);
+          else if (key === 'id')     out.id = stripQ(val);
+          else if (key === 'description') out.description = stripQ(val);
+          else if (key === 'author') out.author = stripQ(val);
+          else if (key === 'level')  out.level = stripQ(val).toLowerCase();
+        }
+        mode = null; lastField = null;
+        continue;
+      }
+      // indented
+      if (mode === 'tags') {
+        const m = raw.match(/^\s*-\s*(.+)$/);
+        if (m) out.tags.push(stripQ(m[1].trim()));
+        continue;
+      }
+      if (mode === 'logsource') {
+        const m = raw.match(/^\s+(\w+):\s*(.+)$/);
+        if (m) out.logsource[m[1]] = stripQ(m[2].trim());
+        continue;
+      }
+      if (mode === 'detection') {
+        const ms = raw.match(/^\s*(\w+):\s*$/);
+        if (ms && ms[1] === 'selection') { mode = 'selection'; lastField = null; continue; }
+        const mc = raw.match(/^\s*condition:\s*(.+)$/);
+        if (mc) { out.condition = stripQ(mc[1].trim()); mode = 'detection'; lastField = null; continue; }
+      }
+      if (mode === 'selection') {
+        const mc = raw.match(/^\s*condition:\s*(.+)$/);
+        if (mc) { out.condition = stripQ(mc[1].trim()); mode = 'detection'; lastField = null; continue; }
+        const ml = raw.match(/^\s+-\s*(.+)$/);
+        if (ml && lastField) {
+          const v = stripQ(ml[1].trim());
+          const slot = out.selection[lastField];
+          if (Array.isArray(slot.value)) slot.value.push(v);
+          else slot.value = [slot.value, v].filter((x) => x !== '');
+          continue;
+        }
+        const mf = raw.match(/^\s+([A-Za-z][\w.]*)(\|[\w|]+)?:\s*(.*)$/);
+        if (mf) {
+          const field = mf[1];
+          const mod = (mf[2] || '|eq').slice(1);
+          const val = mf[3].trim();
+          lastField = field;
+          if (val === '') {
+            out.selection[field] = { mod, value: [] };
+          } else {
+            out.selection[field] = { mod, value: stripQ(val) };
+          }
+        }
+      }
+    }
+    return out;
+  }
+  function stripQ(s) { return String(s).replace(/^['"]|['"]$/g, ''); }
+
+  /* ─── escape helpers ─── */
+  function escXml(s)   { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function escRegex(s) { return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+  function escHtml(s)  { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function quote(s)    { return '"' + String(s).replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"'; }
+  function attackTags(tags) { return tags.filter((t) => /^attack\.t\d/i.test(t)).map((t) => t.replace(/^attack\./i, '').toUpperCase()); }
+  function modToRegex(mod, v) {
+    const e = escRegex(v);
+    if (mod === 'startswith') return '^' + e;
+    if (mod === 'endswith')   return e + '$';
+    if (mod === 'contains')   return e;
+    if (mod === 're')         return v;
+    return '^' + e + '$';
+  }
+
+  /* ─── transpilers ─── */
+  function toWazuh(s) {
+    const sid = 100000 + (Math.abs(hash(s.id || s.title)) % 99000);
+    const lvl = ({ informational: 3, low: 5, medium: 8, high: 12, critical: 14 }[s.level] || 8);
+    const ifsid =
+      s.logsource.category === 'process_creation' ? '61603' :
+      s.logsource.product   === 'windows'         ? '60000' :
+      s.logsource.product   === 'linux'           ? '5500'  :
+      s.logsource.product   === 'okta'            ? '85601' :
+      s.logsource.category  === 'dns'             ? '64000' : null;
+    const techs = attackTags(s.tags);
+    const groupName = (techs[0] || 'sigma').toLowerCase();
+    const out = [];
+    out.push(`<group name="${escXml(groupName)},custom_yz,">`);
+    out.push(`  <rule id="${sid}" level="${lvl}">`);
+    if (ifsid) out.push(`    <if_sid>${ifsid}</if_sid>`);
+    for (const [field, { mod, value }] of Object.entries(s.selection)) {
+      const wfield = mapWazuhField(field);
+      const arr = Array.isArray(value) ? value : [value];
+      for (const v of arr) {
+        if (v === '') continue;
+        out.push(`    <field name="${escXml(wfield)}" type="pcre2">${escXml(modToRegex(mod, v))}</field>`);
+      }
+    }
+    out.push(`    <description>${escXml(s.title || 'sigma → wazuh')}</description>`);
+    techs.forEach((t) => out.push(`    <mitre><id>${escXml(t)}</id></mitre>`));
+    out.push('  </rule>');
+    out.push('</group>');
+    return out.join('\n');
+  }
+
+  function toSplunk(s) {
+    const idx =
+      s.logsource.category === 'process_creation' ? 'index=windows sourcetype="WinEventLog:Sysmon"' :
+      s.logsource.product   === 'windows'         ? 'index=windows' :
+      s.logsource.product   === 'linux'           ? 'index=linux'   :
+      s.logsource.product   === 'okta'            ? 'index=okta'    :
+      s.logsource.category  === 'dns'             ? 'index=dns'     :
+      'index=*';
+    const where = [];
+    for (const [field, { mod, value }] of Object.entries(s.selection)) {
+      const arr = Array.isArray(value) ? value : [value];
+      const conds = arr.filter((v) => v !== '').map((v) => splunkCond(field, mod, v));
+      if (conds.length) where.push(conds.length === 1 ? conds[0] : '(' + conds.join(' OR ') + ')');
+    }
+    const techs = attackTags(s.tags);
+    const lines = [idx];
+    if (where.length) lines.push('| where ' + where.join('\n         AND '));
+    lines.push(`| eval mitre = ${quote(techs.join(',') || 'sigma')}`);
+    lines.push(`| eval rule_name = ${quote(s.title || 'sigma → splunk')}`);
+    lines.push('| stats count latest(_time) as last_seen by host, user, mitre, rule_name');
+    return lines.join('\n');
+  }
+  function splunkCond(field, mod, v) {
+    const e = String(v).replace(/"/g, '\\"');
+    if (mod === 'startswith') return `${field} LIKE "${e}%"`;
+    if (mod === 'endswith')   return `${field} LIKE "%${e}"`;
+    if (mod === 'contains')   return `${field} LIKE "%${e}%"`;
+    if (mod === 're')         return `match(${field}, "${e}")`;
+    return `${field}="${e}"`;
+  }
+
+  function toKql(s) {
+    const tbl =
+      s.logsource.category === 'process_creation'    ? 'DeviceProcessEvents' :
+      s.logsource.category === 'network_connection'  ? 'DeviceNetworkEvents' :
+      s.logsource.category === 'dns'                 ? 'DnsEvents'           :
+      s.logsource.product   === 'okta'               ? 'SigninLogs'          :
+      s.logsource.product   === 'windows'            ? 'SecurityEvent'       :
+      s.logsource.product   === 'linux'              ? 'Syslog'              :
+      'union *';
+    const where = [];
+    for (const [field, { mod, value }] of Object.entries(s.selection)) {
+      const k = mapKqlField(field, tbl);
+      const arr = Array.isArray(value) ? value : [value];
+      const conds = arr.filter((v) => v !== '').map((v) => kqlCond(k, mod, v));
+      if (conds.length) where.push(conds.length === 1 ? conds[0] : '(' + conds.join(' or ') + ')');
+    }
+    const techs = attackTags(s.tags);
+    const projection = tbl === 'DeviceProcessEvents'
+      ? '| project Timestamp, DeviceName, AccountName, FileName, ProcessCommandLine, mitre'
+      : tbl === 'SigninLogs'
+        ? '| project TimeGenerated, UserPrincipalName, Location, IPAddress, ResultType, mitre'
+        : tbl === 'DnsEvents'
+          ? '| project TimeGenerated, ClientIP, Name, QueryType, mitre'
+          : '| project TimeGenerated, Computer, mitre';
+    const lines = [tbl];
+    where.forEach((w) => lines.push('| where ' + w));
+    lines.push(`| extend mitre = ${quote(techs.join(',') || 'sigma')}`);
+    lines.push(projection);
+    return lines.join('\n');
+  }
+  function kqlCond(field, mod, v) {
+    const e = String(v).replace(/"/g, '\\"');
+    if (mod === 'startswith') return `${field} startswith "${e}"`;
+    if (mod === 'endswith')   return `${field} endswith "${e}"`;
+    if (mod === 'contains')   return `${field} contains "${e}"`;
+    if (mod === 're')         return `${field} matches regex "${e}"`;
+    return `${field} == "${e}"`;
+  }
+
+  function toSuricata(s) {
+    const isNetwork =
+      ['network', 'dns', 'firewall', 'ids', 'proxy', 'http'].some((k) =>
+        (s.logsource.category || '').toLowerCase().includes(k) ||
+        (s.logsource.service  || '').toLowerCase().includes(k) ||
+        (s.logsource.product  || '').toLowerCase().includes(k));
+    const fieldsLook = Object.keys(s.selection).join(' ');
+    const looksNetworky = /domain|url|http|dns|ip|host|query/i.test(fieldsLook);
+    if (!isNetwork && !looksNetworky) {
+      return [
+        '# This Sigma rule targets ' + (s.logsource.category || s.logsource.product || 'an endpoint/identity') + ' telemetry.',
+        '# Suricata is a network IDS — it has no equivalent for endpoint or identity events.',
+        '#',
+        '# Tip: pick a network-y example (suspicious dns) to see a real Suricata rule emitted.',
+      ].join('\n');
+    }
+    const sid = 9000000 + (Math.abs(hash(s.id || s.title)) % 90000);
+    const msg = (s.title || 'sigma → suricata').replace(/"/g, '\\"');
+    const techs = attackTags(s.tags);
+    const refs  = techs.map((t) => `reference:url,attack.mitre.org/techniques/${t.replace('.', '/')}`).join('; ');
+    const isDns = (s.logsource.category || '').toLowerCase() === 'dns' ||
+                  Object.keys(s.selection).some((k) => /query|dns|host|domain/i.test(k));
+    if (isDns) {
+      const qn = s.selection.QueryName || s.selection.query || s.selection.dns_query;
+      const arr = qn ? (Array.isArray(qn.value) ? qn.value : [qn.value]) : [];
+      const contents = arr.filter((v) => v !== '').map((v) =>
+        `dns_query; content:${quote(v)}; ${qn.mod === 'endswith' ? 'endswith;' : qn.mod === 'startswith' ? 'startswith;' : 'nocase;'}`
+      ).join(' ');
+      return `alert dns any any -> any any (msg:"YZ ${msg}"; ${contents} ${refs}; classtype:bad-unknown; sid:${sid}; rev:1;)`;
+    }
+    return `alert ip any any -> any any (msg:"YZ ${msg}"; flow:established,to_server; ${refs}; classtype:trojan-activity; sid:${sid}; rev:1;)`;
+  }
+
+  function mapWazuhField(f) {
+    const m = {
+      Image: 'win.eventdata.image',
+      CommandLine: 'win.eventdata.commandLine',
+      ParentImage: 'win.eventdata.parentImage',
+      ParentCommandLine: 'win.eventdata.parentCommandLine',
+      OriginalFileName: 'win.eventdata.originalFileName',
+      User: 'win.eventdata.user',
+      TargetFilename: 'win.eventdata.targetFilename',
+      DestinationIp: 'win.eventdata.destinationIp',
+      DestinationPort: 'win.eventdata.destinationPort',
+      QueryName: 'win.eventdata.queryName',
+      EventID: 'win.system.eventID',
+      TicketEncryptionType: 'win.eventdata.ticketEncryptionType',
+      TicketOptions: 'win.eventdata.ticketOptions',
+      TargetUserName: 'win.eventdata.targetUserName',
+      ServiceName: 'win.eventdata.serviceName',
+      eventType: 'data.eventType',
+      'outcome.result': 'data.outcome.result',
+    };
+    return m[f] || f;
+  }
+  function mapKqlField(f, tbl) {
+    if (tbl === 'DeviceProcessEvents') {
+      const m = {
+        Image: 'FolderPath',
+        CommandLine: 'ProcessCommandLine',
+        ParentImage: 'InitiatingProcessFolderPath',
+        ParentCommandLine: 'InitiatingProcessCommandLine',
+        OriginalFileName: 'ProcessVersionInfoOriginalFileName',
+        User: 'AccountName',
+      };
+      return m[f] || f;
+    }
+    if (tbl === 'SigninLogs') {
+      const m = { eventType: 'OperationName', 'outcome.result': 'ResultType' };
+      return m[f] || f;
+    }
+    if (tbl === 'DnsEvents') {
+      const m = { QueryName: 'Name' };
+      return m[f] || f;
+    }
+    return f;
+  }
+
+  function hash(s) {
+    let h = 0;
+    s = String(s || 'sigma');
+    for (let i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h |= 0; }
+    return h;
+  }
+
+  /* ─── highlighting (very lightweight) ─── */
+  function paint(kind, text) {
+    const html = escHtml(text);
+    if (kind === 'wazuh') {
+      return html
+        .replace(/(&lt;\/?)(\w+)([^&]*?)(\/?&gt;)/g, '<span class="pg-k">$1$2</span>$3<span class="pg-k">$4</span>')
+        .replace(/(name|id|level|type)=&quot;([^&]+)&quot;/g, '<span class="pg-n">$1</span>=<span class="pg-s">&quot;$2&quot;</span>');
+    }
+    if (kind === 'splunk') {
+      return html
+        .replace(/^(index=\S+)/, '<span class="pg-k">$1</span>')
+        .replace(/\b(where|eval|stats|count|by|sort|top|table|head|search|latest)\b/g, '<span class="pg-k">$1</span>')
+        .replace(/(LIKE|OR|AND|NOT|IN|by|as)\b/g, '<span class="pg-o">$1</span>')
+        .replace(/(&quot;[^&]*?&quot;)/g, '<span class="pg-s">$1</span>');
+    }
+    if (kind === 'kql') {
+      return html
+        .replace(/^([A-Z]\w+)/m, '<span class="pg-k">$1</span>')
+        .replace(/\|\s*(where|extend|project|summarize|sort|take|order|join|union)\b/g, '| <span class="pg-k">$1</span>')
+        .replace(/\b(startswith|endswith|contains|matches regex|or|and|not)\b/g, '<span class="pg-o">$1</span>')
+        .replace(/(&quot;[^&]*?&quot;)/g, '<span class="pg-s">$1</span>');
+    }
+    if (kind === 'suricata') {
+      return html
+        .replace(/^(alert|drop|reject|pass)\b/gm, '<span class="pg-k">$1</span>')
+        .replace(/\b(msg|content|sid|rev|classtype|reference|flow|dns_query|nocase|startswith|endswith)\b/g, '<span class="pg-o">$1</span>')
+        .replace(/(&quot;[^&]*?&quot;)/g, '<span class="pg-s">$1</span>')
+        .replace(/^(#.*)$/gm, '<span class="pg-c">$1</span>');
+    }
+    return html;
+  }
+
+  /* ─── main update loop (debounced) ─── */
+  let timer = null;
+  function update() {
+    clearTimeout(timer);
+    timer = setTimeout(run, 80);
+  }
+  function run() {
+    const text = ta.value;
+    let parsed;
+    try { parsed = parseSigma(text); }
+    catch (e) {
+      status.textContent = 'parse error';
+      status.dataset.state = 'error';
+      return;
+    }
+    if (!parsed.title && Object.keys(parsed.selection).length === 0) {
+      status.textContent = 'empty';
+      status.dataset.state = 'error';
+      [outW, outS, outK, outU].forEach((el) => { if (el) el.innerHTML = '<span class="pg-c"># write a sigma rule on the left, or pick an example above</span>'; });
+      if (inMeta) inMeta.textContent = '— ready';
+      return;
+    }
+    const techs = attackTags(parsed.tags);
+    if (inMeta) inMeta.textContent = `— ${techs.join(',') || 'sigma'} · ${parsed.level}`;
+    try {
+      outW.innerHTML = paint('wazuh',    toWazuh(parsed));
+      outS.innerHTML = paint('splunk',   toSplunk(parsed));
+      outK.innerHTML = paint('kql',      toKql(parsed));
+      outU.innerHTML = paint('suricata', toSuricata(parsed));
+      status.textContent = `compiled · ${techs[0] || 'sigma'}`;
+      status.dataset.state = 'ok';
+    } catch (e) {
+      status.textContent = 'transpile error';
+      status.dataset.state = 'error';
+    }
+  }
+
+  /* ─── tabs ─── */
+  if (tabsEl && panesEl) {
+    tabsEl.addEventListener('click', (e) => {
+      const b = e.target instanceof HTMLElement ? e.target.closest('.pg-tab') : null;
+      if (!b) return;
+      const which = b.dataset.pgTab;
+      tabsEl.querySelectorAll('.pg-tab').forEach((x) => {
+        const on = x.dataset.pgTab === which;
+        x.classList.toggle('is-active', on);
+        x.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      panesEl.querySelectorAll('.pg-pane-out').forEach((x) => {
+        x.classList.toggle('is-active', x.dataset.pgPane === which);
+      });
+    });
+  }
+
+  /* ─── copy button ─── */
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
+      const active = panesEl.querySelector('.pg-pane-out.is-active code');
+      if (!active) return;
+      const text = active.textContent || '';
+      try {
+        navigator.clipboard.writeText(text).then(() => {
+          copyBtn.dataset.copied = '1';
+          copyBtn.textContent = 'copied';
+          setTimeout(() => { copyBtn.dataset.copied = '0'; copyBtn.textContent = 'copy active'; }, 1200);
+        });
+      } catch (_) {
+        copyBtn.textContent = 'copy failed';
+      }
+    });
+  }
+
+  /* ─── example switcher ─── */
+  sel.addEventListener('change', () => {
+    ta.value = EXAMPLES[sel.value] || EXAMPLES.lsass;
+    update();
+  });
+
+  /* ─── live update ─── */
+  ta.addEventListener('input', update);
+  ta.addEventListener('keydown', (e) => {
+    // Tab → 2 spaces (don't lose focus)
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const start = ta.selectionStart, end = ta.selectionEnd;
+      ta.value = ta.value.substring(0, start) + '  ' + ta.value.substring(end);
+      ta.selectionStart = ta.selectionEnd = start + 2;
+      update();
+    }
+  });
+
+  /* ─── init ─── */
+  ta.value = EXAMPLES.lsass;
+  run();
+})();
+
+/* ════════════════════════════════════════════════════════════
+ * v2.1 — Detection-engineering activity heatmap (52w × 7d)
+ * ──────────────────────────────────────────────────────────── */
+(() => {
+  const grid     = document.getElementById('hmGrid');
+  const tipEl    = document.getElementById('hmTip');
+  const monthsEl = document.getElementById('hmMonths');
+  const totalEl  = document.getElementById('hmTotal');
+  const streakEl = document.getElementById('hmStreak');
+  const bestEl   = document.getElementById('hmBest');
+  const avgEl    = document.getElementById('hmAvg');
+  if (!grid) return;
+
+  const SVGNS = 'http://www.w3.org/2000/svg';
+  const WEEKS = 52;
+  const DAYS  = 7;
+  const cellW = 12, cellH = 12, gap = 2;
+
+  /* ─── curated weekly intensities (0..4) — full year story ─── */
+  // 52 entries: rough storyline of a detection-engineer's year.
+  // 0 = nothing shipped, 4 = sprint week.
+  const weekIntensity = [
+    1, 1, 0, 1, 2, 2, 1, 2, 3, 3,   //  0..9   ramp-up
+    2, 1, 2, 3, 4, 4, 3, 2, 1, 1,   // 10..19  first sprint + cooldown
+    2, 2, 3, 4, 4, 3, 2, 2, 3, 3,   // 20..29  steady cadence
+    4, 4, 3, 2, 1, 0, 0, 1, 2, 3,   // 30..39  big sprint, then OSCP focus
+    3, 4, 4, 3, 2, 3, 3, 4, 4, 3,   // 40..49  current quarter, heavy
+    4, 4,                            // 50..51  current weeks
+  ];
+  /* day-of-week weights — weekdays heavier */
+  const dayWeight = [3, 4, 4, 4, 3, 1, 1]; // Mon..Sun
+  /* tiny seeded PRNG so the layout is deterministic on every load */
+  function seeded(seed) {
+    let s = seed >>> 0;
+    return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 0xFFFFFFFF; };
+  }
+  const rng = seeded(0x5A1010 >>> 0); // arbitrary, deterministic
+
+  /* ─── curated event labels seeded across the year ─── */
+  const events = [
+    [3,  2, 'first sigma rule — t1059.001'],
+    [8,  3, 'wazuh tuning — false-positive sweep'],
+    [13, 1, 'atomic-red-team — t1003.001 closure'],
+    [15, 2, 'sigma → wazuh + splunk pipeline shipped'],
+    [16, 1, 'red→blue closure — kerberoast'],
+    [16, 3, 'mitre coverage matrix v1'],
+    [22, 4, 'misp + virustotal enrichment'],
+    [24, 2, 'oscp lab — buffer overflow refresh'],
+    [30, 1, 'ad attack chain documented'],
+    [31, 3, 'sigma rule — impossible travel (okta)'],
+    [33, 2, 'incident report — phishing attempt'],
+    [35, 0, 'oscp study — no rules shipped'],
+    [38, 1, 'home-lab-siem v0.4'],
+    [41, 3, 'red team week — htb pivot box'],
+    [44, 4, 'detection-engineering writeup × 3'],
+    [47, 2, 'closure — lsass dump comsvcs.dll'],
+    [49, 4, 'sigma → kql + suricata transpiler'],
+    [50, 3, 'this portfolio · v2.1'],
+    [51, 4, 'cmdline · :ask · heatmap'],
+  ];
+
+  /* ─── build cell data ─── */
+  /** @type {{count:number,label:string}[][]} */
+  const data = new Array(WEEKS).fill(0).map(() => new Array(DAYS).fill(0).map(() => ({ count: 0, label: '' })));
+  for (let w = 0; w < WEEKS; w++) {
+    const intensity = weekIntensity[w] || 0;
+    if (intensity === 0) continue;
+    for (let d = 0; d < DAYS; d++) {
+      const r = rng();
+      const score = (intensity * dayWeight[d]) / 4;
+      // probability of being non-zero scales with intensity; weekend cuts off harder
+      const p = (intensity / 4) * (dayWeight[d] / 4);
+      if (r < p * 0.9) {
+        data[w][d] = { count: Math.max(1, Math.min(4, Math.round(score - 0.4 + r))), label: '' };
+      }
+    }
+  }
+  events.forEach(([w, d, label]) => {
+    if (!data[w] || !data[w][d]) return;
+    data[w][d] = { count: Math.max(data[w][d].count, 3), label };
+  });
+
+  /* ─── render SVG ─── */
+  while (grid.firstChild) grid.removeChild(grid.firstChild);
+  const svgW = WEEKS * (cellW + gap) - gap;
+  const svgH = DAYS  * (cellH + gap) - gap;
+  grid.setAttribute('viewBox', `0 0 ${svgW} ${svgH}`);
+  for (let w = 0; w < WEEKS; w++) {
+    for (let d = 0; d < DAYS; d++) {
+      const x = w * (cellW + gap);
+      const y = d * (cellH + gap);
+      const cell = data[w][d];
+      const r = document.createElementNS(SVGNS, 'rect');
+      r.setAttribute('x', String(x));
+      r.setAttribute('y', String(y));
+      r.setAttribute('width', String(cellW));
+      r.setAttribute('height', String(cellH));
+      r.setAttribute('class', 'hm-c');
+      r.setAttribute('data-l', String(cell.count));
+      r.setAttribute('data-w', String(w));
+      r.setAttribute('data-d', String(d));
+      const t = document.createElementNS(SVGNS, 'title');
+      t.textContent = `week ${w + 1} · ${dayName(d)} · ${cell.count} contribution${cell.count !== 1 ? 's' : ''}${cell.label ? ' — ' + cell.label : ''}`;
+      r.appendChild(t);
+      grid.appendChild(r);
+    }
+  }
+
+  /* ─── stats ─── */
+  let total = 0, best = 0, currentStreak = 0;
+  const weekTotals = [];
+  for (let w = 0; w < WEEKS; w++) {
+    let sum = 0;
+    for (let d = 0; d < DAYS; d++) sum += data[w][d].count;
+    weekTotals.push(sum);
+    total += sum;
+    if (sum > best) best = sum;
+  }
+  for (let w = WEEKS - 1; w >= 0; w--) {
+    if (weekTotals[w] > 0) currentStreak++; else break;
+  }
+  const active = weekTotals.filter((x) => x > 0).sort((a, b) => a - b);
+  const median = active.length === 0 ? 0 : active[Math.floor(active.length / 2)];
+  if (totalEl)  totalEl.textContent  = String(total);
+  if (streakEl) streakEl.textContent = String(currentStreak);
+  if (bestEl)   bestEl.textContent   = String(best);
+  if (avgEl)    avgEl.textContent    = String(median);
+
+  /* ─── month labels ─── */
+  if (monthsEl) {
+    const today = new Date();
+    const monthFmt = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const labels = [];
+    for (let i = 11; i >= 0; i--) {
+      const d = new Date(today.getFullYear(), today.getMonth() - i, 1);
+      labels.push(monthFmt[d.getMonth()]);
+    }
+    monthsEl.innerHTML = labels.map((l) => `<span>${l}</span>`).join('');
+  }
+
+  /* ─── hover tip ─── */
+  function dayName(d) { return ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][d] || '—'; }
+  if (tipEl) {
+    grid.addEventListener('mouseover', (e) => {
+      const t = e.target;
+      if (!(t && t.getAttribute && t.getAttribute('class') === 'hm-c')) return;
+      const w = parseInt(t.getAttribute('data-w') || '0', 10);
+      const d = parseInt(t.getAttribute('data-d') || '0', 10);
+      const cell = data[w][d];
+      tipEl.textContent = `w${String(w + 1).padStart(2, '0')} · ${dayName(d)} · ${cell.count} contribution${cell.count !== 1 ? 's' : ''}${cell.label ? ' — ' + cell.label : ''}`;
+    });
+    grid.addEventListener('mouseleave', () => { tipEl.textContent = '— hover to inspect'; });
+  }
 })();
