@@ -1,0 +1,140 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
+  "basics": {
+    "name": "Yassir Zahidi",
+    "label": "Cybersecurity engineer-in-training · SOC / blue team / detection engineering",
+    "image": "https://avatars.githubusercontent.com/u/y-zahidi",
+    "email": "yassirzahidi8@gmail.com",
+    "phone": "",
+    "url": "https://y-zahidi.github.io",
+    "summary": "Specialized Technician in Cybersecurity. I build reproducible SIEM labs (Wazuh · Suricata · Sysmon · MISP · FortiGate) and ship code that runs in production. Looking for a SOC / blue-team / DevSecOps internship in 2026.",
+    "location": {
+      "city": "Rabat",
+      "countryCode": "MA",
+      "region": "Rabat-Salé-Kénitra"
+    },
+    "profiles": [
+      { "network": "GitHub",   "username": "y-zahidi",        "url": "https://github.com/y-zahidi" },
+      { "network": "LinkedIn", "username": "yassir-zahidi",   "url": "https://www.linkedin.com/in/yassir-zahidi/" },
+      { "network": "Site",     "username": "y-zahidi.github.io","url": "https://y-zahidi.github.io" }
+    ]
+  },
+  "work": [
+    {
+      "name": "Préfecture de Tétouan · Ministère de l'Intérieur (SSIC)",
+      "position": "Cybersecurity Intern",
+      "url": "",
+      "location": "Tétouan, Morocco",
+      "startDate": "2024-05-02",
+      "endDate":   "2024-05-31",
+      "summary": "Designed and deployed a multi-layer SIEM on a real ministry network: Wazuh + Suricata + Sysmon + MISP + VirusTotal, integrated with the FortiGate perimeter and Nessus weekly vuln scans.",
+      "highlights": [
+        "Wrote custom Wazuh decoders + rules for FortiGate traffic and event logs (failed VPN, geo-anomaly, admin-out-of-hours).",
+        "Pulled Sysmon channel via the Wazuh agent on Windows endpoints (process-create, network-connect, image-load).",
+        "Mapped Suricata IDS alerts (EVE JSON) to MITRE ATT&CK techniques inside Wazuh.",
+        "Wired MISP feeds (CIRCL, Abuse.ch) on a 6-hour sync; tagged alerts with matching threat-intel hits.",
+        "Documented findings + remediation from the lab-segment penetration tests."
+      ]
+    },
+    {
+      "name": "ALTEN Maroc",
+      "position": "Engineering intern (digital twin)",
+      "location": "Tétouan, Morocco",
+      "startDate": "2023-08-01",
+      "endDate":   "2023-09-15",
+      "summary": "Worked on the digital-twin pipeline for an industrial client.",
+      "highlights": []
+    }
+  ],
+  "education": [
+    {
+      "institution": "École Marocaine des Sciences de l'Ingénieur (EMSI), Rabat",
+      "area": "Computer Engineering",
+      "studyType": "Engineer's degree (in progress)",
+      "startDate": "2024-09",
+      "endDate":   "2027-06"
+    },
+    {
+      "institution": "ISTA — Institut Spécialisé de Technologie Appliquée",
+      "area": "Cybersecurity & Trust in Digital Environments",
+      "studyType": "Specialized Technician diploma",
+      "startDate": "2022-09",
+      "endDate":   "2024-06"
+    }
+  ],
+  "certificates": [
+    { "name": "Fortinet NSE 1",                   "issuer": "Fortinet"   },
+    { "name": "Fortinet NSE 2",                   "issuer": "Fortinet"   },
+    { "name": "Fortinet NSE 3",                   "issuer": "Fortinet"   },
+    { "name": "Certified Ethical Hacker (CEH essentials)", "issuer": "EC-Council" },
+    { "name": "Network Defense Essentials",       "issuer": "EC-Council" },
+    { "name": "ICSI | CNSS — Cybersecurity Specialist",    "issuer": "ICSI"       },
+    { "name": "CCNA — Routing & Switching track", "issuer": "Cisco"      },
+    { "name": "Google IT Support",                "issuer": "Google"     },
+    { "name": "Linux Essentials",                 "issuer": "LPI"        },
+    { "name": "Cybersecurity Bootcamp",           "issuer": "Diverse"    }
+  ],
+  "skills": [
+    { "name": "SIEM / detection",   "level": "applied",     "keywords": ["Wazuh", "Suricata", "Sysmon", "MITRE ATT&CK", "Sigma", "Atomic Red Team"] },
+    { "name": "Threat intel",       "level": "intermediate","keywords": ["MISP", "VirusTotal", "OpenCTI"] },
+    { "name": "Perimeter",          "level": "intermediate","keywords": ["FortiGate", "Nessus", "VLAN", "IPSec"] },
+    { "name": "Offensive (intro)",  "level": "intermediate","keywords": ["Nmap", "Burp Suite", "Metasploit", "Bloodhound", "Mimikatz"] },
+    { "name": "OS / system",        "level": "applied",     "keywords": ["Linux (Debian / Ubuntu)", "Windows Server", "Active Directory"] },
+    { "name": "Dev",                "level": "applied",     "keywords": ["C / C++ (VCL)", "PHP", "HTML / CSS / JS", "MySQL", "Bash", "Python (basics)"] },
+    { "name": "DevOps / data",      "level": "applied",     "keywords": ["Docker / Compose", "Git / GitHub", "QlikView", "WordPress", "VMware Workstation"] }
+  ],
+  "languages": [
+    { "language": "Arabic",  "fluency": "Native"      },
+    { "language": "French",  "fluency": "DELF B2"     },
+    { "language": "English", "fluency": "Professional"}
+  ],
+  "projects": [
+    {
+      "name": "home-lab-siem",
+      "description": "Reproducible SIEM lab built around the architecture deployed at the Préfecture de Tétouan. docker compose up → Wazuh + Suricata + Sysmon + MISP online in ~3 minutes.",
+      "url": "https://github.com/y-zahidi/home-lab-siem",
+      "keywords": ["Wazuh", "Suricata", "Sysmon", "MISP", "FortiGate", "Nessus", "Docker"]
+    },
+    {
+      "name": "FacturationPro-Enterprise",
+      "description": "Windows desktop billing & invoicing app, C++ / VCL with a MySQL backend. Multi-user, role-based, prints PDF invoices.",
+      "url": "https://github.com/y-zahidi/FacturationPro-Enterprise",
+      "keywords": ["C++", "VCL", "RAD Studio", "MySQL"]
+    },
+    {
+      "name": "water-stress-morocco-analytics",
+      "description": "Star-schema data warehouse + QlikView BI on water stress in Morocco (2015–2025), 68k+ records, 12 regions.",
+      "url": "https://github.com/y-zahidi/water-stress-morocco-analytics",
+      "keywords": ["MySQL", "QlikView", "BI", "ETL"]
+    },
+    {
+      "name": "HTMLCamp",
+      "description": "E-learning platform for web dev with a live Monaco editor and AI hints. PHP backend, MySQL, in-browser code runner.",
+      "url": "https://github.com/y-zahidi/HTMLCamp",
+      "keywords": ["HTML", "CSS", "JS", "PHP", "MySQL", "Monaco"]
+    },
+    {
+      "name": "Rabat-Cultural-Website",
+      "description": "Accessible, responsive WordPress platform showcasing Morocco's capital. WCAG-aware, multilingual-ready.",
+      "url": "https://github.com/y-zahidi/Rabat-Cultural-Website",
+      "keywords": ["WordPress", "PHP", "CSS3", "JS", "A11y"]
+    },
+    {
+      "name": "pentest-cheatsheet",
+      "description": "Working notes on offensive security — recon → enum → AD → web → post-exploitation. The cheatsheet I actually use while studying.",
+      "url": "https://github.com/y-zahidi/pentest-cheatsheet",
+      "keywords": ["Nmap", "Burp", "Metasploit", "Bloodhound"]
+    },
+    {
+      "name": "ctf-writeups",
+      "description": "Walkthroughs of the CTFs / boxes I solve — methodology over flags. TryHackMe + HackTheBox in a consistent template.",
+      "url": "https://github.com/y-zahidi/ctf-writeups",
+      "keywords": ["TryHackMe", "HackTheBox", "Markdown"]
+    }
+  ],
+  "meta": {
+    "canonical": "https://y-zahidi.github.io/resume.json",
+    "version":   "v1.0.0",
+    "lastModified": "2026-05-07"
+  }
+}

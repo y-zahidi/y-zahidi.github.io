@@ -207,3 +207,352 @@ window.addEventListener('keydown', (e) => {
     if (cmdk.hidden) openCmdk(); else closeCmdk();
   }
 });
+
+/* ──────────────────────────────────────────────────────────
+ * theme switcher (dark · midnight · paper)
+ * ──────────────────────────────────────────────────────── */
+const THEMES = ['dark', 'midnight', 'paper'];
+const themeBtn = document.getElementById('themeToggle');
+const themeLabel = document.getElementById('themeLabel');
+
+const applyTheme = (name) => {
+  if (!THEMES.includes(name)) name = 'midnight';
+  document.documentElement.setAttribute('data-theme', name);
+  if (themeLabel) themeLabel.textContent = name;
+  try { localStorage.setItem('yz.theme', name); } catch (_) {}
+};
+const currentTheme = () => document.documentElement.getAttribute('data-theme') || 'midnight';
+const cycleTheme = () => {
+  const cur = currentTheme();
+  const next = THEMES[(THEMES.indexOf(cur) + 1) % THEMES.length];
+  applyTheme(next);
+};
+// boot
+(() => {
+  let saved;
+  try { saved = localStorage.getItem('yz.theme'); } catch (_) {}
+  applyTheme(saved || 'midnight');
+})();
+themeBtn && themeBtn.addEventListener('click', cycleTheme);
+
+/* ──────────────────────────────────────────────────────────
+ * vim-style keyboard navigation: g{h,a,c,d,p,n,s,r,m}, t, p, ?
+ * ──────────────────────────────────────────────────────── */
+const ROUTES = {
+  h: { kind: 'top' },
+  a: { id: '#about' },
+  c: { id: '#case' },
+  d: { id: '#detect' },
+  p: { id: '#projects' },
+  n: { id: '#now' },
+  s: { id: '#stack' },
+  r: { id: '#certs' },
+  m: { id: '#contact' },
+};
+let gPending = false;
+let gTimer = null;
+const isTyping = (target) => {
+  const t = target.tagName;
+  return target.isContentEditable || t === 'INPUT' || t === 'TEXTAREA' || t === 'SELECT';
+};
+const goRoute = (route) => {
+  if (route.kind === 'top') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+  const el = document.querySelector(route.id);
+  if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); history.pushState(null, '', route.id); }
+};
+window.addEventListener('keydown', (e) => {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (isTyping(e.target)) return;
+  if (cmdk && !cmdk.hidden) return;
+  const k = e.key;
+  if (gPending) {
+    gPending = false; clearTimeout(gTimer);
+    const route = ROUTES[k.toLowerCase()];
+    if (route) { e.preventDefault(); goRoute(route); }
+    return;
+  }
+  if (k === 'g' || k === 'G') { gPending = true; gTimer = setTimeout(() => { gPending = false; }, 900); return; }
+  if (k === 't' || k === 'T') { e.preventDefault(); cycleTheme(); return; }
+  if (k === '?') { e.preventDefault(); openHelp(); return; }
+  if (k === 'p' && !e.shiftKey) { /* don't override print, just hint */ }
+});
+
+/* ──────────────────────────────────────────────────────────
+ * keyboard help modal (?)
+ * ──────────────────────────────────────────────────────── */
+const kHelp = document.getElementById('kHelp');
+const openHelp = () => {
+  if (!kHelp) return;
+  kHelp.hidden = false;
+  document.body.style.overflow = 'hidden';
+};
+const closeHelp = () => {
+  if (!kHelp) return;
+  kHelp.hidden = true;
+  document.body.style.overflow = '';
+};
+kHelp && kHelp.addEventListener('click', (e) => { if (e.target.dataset.khelpClose !== undefined) closeHelp(); });
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && kHelp && !kHelp.hidden) { e.preventDefault(); closeHelp(); }
+});
+
+/* ──────────────────────────────────────────────────────────
+ * scroll-spy: highlight active section in side indicator
+ * ──────────────────────────────────────────────────────── */
+const indicator = document.getElementById('sectionIndicator');
+if (indicator) {
+  const items = Array.from(indicator.querySelectorAll('li'));
+  const map = new Map(items.map((li) => [li.dataset.target, li]));
+  const targets = items.map((li) => document.querySelector(li.dataset.target)).filter(Boolean);
+  const setActive = (id) => {
+    items.forEach((li) => li.classList.toggle('active', li.dataset.target === id));
+  };
+  const spy = new IntersectionObserver((entries) => {
+    // pick the entry closest to the top that is intersecting
+    const visible = entries.filter((en) => en.isIntersecting)
+      .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+    if (visible.length) setActive('#' + visible[0].target.id);
+  }, { rootMargin: '-30% 0px -55% 0px', threshold: 0 });
+  targets.forEach((t) => spy.observe(t));
+  items.forEach((li) => li.addEventListener('click', () => {
+    const t = document.querySelector(li.dataset.target);
+    if (t) { t.scrollIntoView({ behavior: 'smooth', block: 'start' }); history.pushState(null, '', li.dataset.target); }
+  }));
+}
+
+/* ──────────────────────────────────────────────────────────
+ * MITRE ATT&CK matrix — render + hover/focus rule preview
+ * ──────────────────────────────────────────────────────── */
+const TACTICS = [
+  { name: 'Initial Access', techs: [
+    { id: 'T1078',   name: 'Valid Accounts',           state: 'covered', rule: { engine: 'wazuh', tag: 'custom-rule', title: 'Impossible-travel sign-in', body:
+`<rule id="100210" level="10">
+  <if_group>authentication_failures</if_group>
+  <same_source_ip />
+  <same_user />
+  <different_geoip />
+  <description>Impossible-travel sign-in: same user, two countries < 1h</description>
+  <mitre><id>T1078</id><tactic>Initial Access</tactic></mitre>
+</rule>` } },
+    { id: 'T1133',   name: 'External Remote Services', state: 'covered', rule: { engine: 'wazuh', tag: 'fortigate-vpn', title: 'FortiGate VPN brute-force', body:
+`<rule id="100204" level="9">
+  <if_sid>4651</if_sid>
+  <field name="action">login_failed</field>
+  <description>FortiGate SSL-VPN: 5 failed logins from same IP in 60s</description>
+  <mitre><id>T1133</id></mitre>
+</rule>` } },
+    { id: 'T1566.002', name: 'Phishing: link',         state: 'planned' },
+  ] },
+  { name: 'Execution', techs: [
+    { id: 'T1059.001', name: 'PowerShell',             state: 'covered', rule: { engine: 'wazuh', tag: 'sysmon', title: 'Suspicious encoded PowerShell', body:
+`<rule id="100311" level="12">
+  <if_group>sysmon_event1</if_group>
+  <field name="win.eventdata.commandLine" type="pcre2">(?i)-enc(odedcommand)? [A-Za-z0-9+/=]{60,}</field>
+  <description>PowerShell with long base64 encoded command</description>
+  <mitre><id>T1059.001</id></mitre>
+</rule>` } },
+    { id: 'T1059.003', name: 'cmd.exe',                state: 'covered', rule: { engine: 'wazuh', tag: 'sysmon', title: 'Living-off-the-land cmd chain', body:
+`<rule id="100315" level="9">
+  <if_group>sysmon_event1</if_group>
+  <field name="win.eventdata.commandLine" type="pcre2">(?i)cmd\\.exe.*(/c|/k).*&amp;&amp;.*(net|whoami|tasklist|systeminfo)</field>
+  <description>cmd.exe chained recon commands</description>
+  <mitre><id>T1059.003</id></mitre>
+</rule>` } },
+    { id: 'T1106',     name: 'Native API',             state: 'planned' },
+  ] },
+  { name: 'Persistence', techs: [
+    { id: 'T1547.001', name: 'Run keys',               state: 'covered', rule: { engine: 'wazuh', tag: 'sysmon', title: 'New autorun registry key', body:
+`<rule id="100412" level="10">
+  <if_group>sysmon_event13</if_group>
+  <field name="win.eventdata.targetObject" type="pcre2">(?i)\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run\\\\</field>
+  <description>Sysmon: registry value set under Run key</description>
+  <mitre><id>T1547.001</id></mitre>
+</rule>` } },
+    { id: 'T1543.003', name: 'Windows service',        state: 'planned' },
+  ] },
+  { name: 'Defense Evasion', techs: [
+    { id: 'T1027',     name: 'Obfuscated files',       state: 'covered', rule: { engine: 'suricata', tag: 'et-policy', title: 'High-entropy executable download', body:
+`alert http any any -> $HOME_NET any (
+  msg:"ET POLICY high-entropy PE downloaded";
+  flow:established,to_client; file_data;
+  filemd5:!whitelist.list; classtype:policy-violation; sid:9001234; rev:1;
+)` } },
+    { id: 'T1112',     name: 'Modify Registry',        state: 'covered', rule: { engine: 'wazuh', tag: 'sysmon', title: 'Defender disabled via registry', body:
+`<rule id="100501" level="14">
+  <if_group>sysmon_event13</if_group>
+  <field name="win.eventdata.targetObject" type="pcre2">(?i)DisableAntiSpyware|DisableRealtimeMonitoring</field>
+  <description>Defender real-time protection disabled</description>
+  <mitre><id>T1112</id></mitre>
+</rule>` } },
+  ] },
+  { name: 'Credential Access', techs: [
+    { id: 'T1003.001', name: 'LSASS memory',           state: 'covered', rule: { engine: 'wazuh', tag: 'sysmon', title: 'Suspicious access to LSASS', body:
+`<rule id="100620" level="14">
+  <if_group>sysmon_event10</if_group>
+  <field name="win.eventdata.targetImage">C:\\\\Windows\\\\System32\\\\lsass.exe</field>
+  <field name="win.eventdata.grantedAccess" type="pcre2">0x10|0x1410|0x1010</field>
+  <description>Process opened LSASS with credential-dump access mask</description>
+  <mitre><id>T1003.001</id></mitre>
+</rule>` } },
+    { id: 'T1110',     name: 'Brute force',            state: 'covered', rule: { engine: 'wazuh', tag: 'auth', title: 'SSH brute-force from single IP', body:
+`<rule id="5712" level="10">
+  <if_matched_sid>5710</if_matched_sid>
+  <same_source_ip />
+  <description>sshd: 8 failed logins from same source within 120s</description>
+  <mitre><id>T1110</id></mitre>
+</rule>` } },
+  ] },
+  { name: 'Discovery', techs: [
+    { id: 'T1087',     name: 'Account discovery',      state: 'planned' },
+    { id: 'T1018',     name: 'Remote system discovery',state: 'planned' },
+  ] },
+  { name: 'Lateral Movement', techs: [
+    { id: 'T1021.001', name: 'RDP',                    state: 'covered', rule: { engine: 'wazuh', tag: 'win-security', title: 'RDP from non-corporate IP', body:
+`<rule id="100710" level="10">
+  <if_sid>60103</if_sid>
+  <field name="win.eventdata.LogonType">10</field>
+  <srcip>!10.0.0.0/8</srcip>
+  <description>Successful RDP logon from outside the corporate range</description>
+  <mitre><id>T1021.001</id></mitre>
+</rule>` } },
+    { id: 'T1021.002', name: 'SMB / Admin shares',     state: 'planned' },
+  ] },
+  { name: 'Exfiltration / C2', techs: [
+    { id: 'T1071.001', name: 'Web protocols (C2)',     state: 'covered', rule: { engine: 'suricata', tag: 'et-trojan', title: 'Beaconing to known C2', body:
+`alert http $HOME_NET any -> any any (
+  msg:"ET TROJAN beacon with abuse.ch C2 hostname";
+  flow:established,to_server; http.host; pcre:"/abuseintel\\.example\\.tld$/i";
+  classtype:trojan-activity; sid:9001500; rev:2;
+)` } },
+    { id: 'T1041',     name: 'Exfiltration over C2',   state: 'planned' },
+    { id: 'T1567',     name: 'Web service exfil',      state: 'out' },
+  ] },
+];
+
+const matrix = document.getElementById('attMatrix');
+const rpEl = document.getElementById('rulePreview');
+const rpTitle = document.getElementById('rpTitle');
+const rpTag = document.getElementById('rpTag');
+const rpBody = document.getElementById('rpBody');
+
+const escapeHtml = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+const renderMatrix = () => {
+  if (!matrix) return;
+  matrix.innerHTML = '';
+  TACTICS.forEach((tac) => {
+    const col = document.createElement('div');
+    col.className = 'tactic';
+    const h = document.createElement('p');
+    h.className = 'tactic-name';
+    h.textContent = tac.name;
+    col.appendChild(h);
+    const ul = document.createElement('ul');
+    tac.techs.forEach((t) => {
+      const li = document.createElement('li');
+      li.className = 'ttp';
+      li.dataset.state = t.state;
+      li.dataset.id = t.id;
+      li.tabIndex = 0;
+      li.setAttribute('role', 'button');
+      li.setAttribute('aria-label', `${t.id} ${t.name} — ${t.state}`);
+      li.innerHTML = `<span class="ttp-id">${t.id}</span><span class="ttp-name">${t.name}</span>`;
+      const show = () => showRule(t);
+      li.addEventListener('mouseenter', show);
+      li.addEventListener('focus', show);
+      li.addEventListener('click', show);
+      ul.appendChild(li);
+    });
+    col.appendChild(ul);
+    matrix.appendChild(col);
+  });
+};
+
+const showRule = (t) => {
+  if (!rpEl) return;
+  if (t.state !== 'covered' || !t.rule) {
+    rpEl.classList.remove('live');
+    rpTitle.textContent = `${t.id} — ${t.name}`;
+    rpTag.textContent = t.state === 'planned' ? 'planned · backlog' : 'out of scope';
+    rpBody.innerHTML = `<code>// no rule yet — ${escapeHtml(t.name)} is on the backlog.\n// follow home-lab-siem for updates.</code>`;
+    return;
+  }
+  rpEl.classList.add('live');
+  rpTitle.textContent = `${t.id} — ${t.rule.title}`;
+  rpTag.textContent = `${t.rule.engine} · ${t.rule.tag}`;
+  rpBody.innerHTML = `<code>${escapeHtml(t.rule.body)}</code>`;
+};
+
+renderMatrix();
+
+// auto-rotate through covered techniques every 4.5s when section visible
+if (matrix && rpEl) {
+  const covered = TACTICS.flatMap((t) => t.techs).filter((t) => t.state === 'covered');
+  let idx = 0;
+  let timer = null;
+  let inView = false;
+  let userInteracted = false;
+  matrix.addEventListener('mouseenter', () => { userInteracted = true; });
+  matrix.addEventListener('focusin', () => { userInteracted = true; });
+  const tick = () => {
+    if (!inView || userInteracted) return;
+    showRule(covered[idx % covered.length]);
+    idx++;
+  };
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      inView = e.isIntersecting;
+      if (inView && !timer) {
+        showRule(covered[0]);
+        idx = 1;
+        timer = setInterval(tick, 4500);
+      } else if (!inView && timer) {
+        clearInterval(timer); timer = null;
+      }
+    });
+  }, { threshold: 0.25 });
+  obs.observe(matrix);
+}
+
+/* ──────────────────────────────────────────────────────────
+ * scroll-to-top FAB
+ * ──────────────────────────────────────────────────────── */
+const totop = document.createElement('button');
+totop.className = 'totop';
+totop.type = 'button';
+totop.setAttribute('aria-label', 'Back to top');
+totop.innerHTML = '↑';
+totop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+document.body.appendChild(totop);
+window.addEventListener('scroll', () => {
+  totop.classList.toggle('visible', window.scrollY > 800);
+}, { passive: true });
+
+/* ──────────────────────────────────────────────────────────
+ * ?print → switch to print preview automatically
+ * ──────────────────────────────────────────────────────── */
+const params = new URLSearchParams(location.search);
+if (params.has('print') || params.has('cv')) {
+  // give the page a tick to render then trigger print
+  document.documentElement.setAttribute('data-theme', 'paper');
+  setTimeout(() => { window.print(); }, 600);
+}
+
+/* ──────────────────────────────────────────────────────────
+ * one-time CRT boot intro (subtle, skippable, prefers-reduced-motion respected)
+ * ──────────────────────────────────────────────────────── */
+(() => {
+  if (prefersReducedMotion) return;
+  let seen = false;
+  try { seen = localStorage.getItem('yz.crt') === '1'; } catch (_) {}
+  if (seen) return;
+  document.documentElement.setAttribute('data-fx', 'crt');
+  setTimeout(() => {
+    document.documentElement.removeAttribute('data-fx');
+    try { localStorage.setItem('yz.crt', '1'); } catch (_) {}
+  }, 1400);
+  // any keypress / click skips it
+  const skip = () => { document.documentElement.removeAttribute('data-fx'); };
+  window.addEventListener('keydown', skip, { once: true });
+  window.addEventListener('click', skip, { once: true });
+})();

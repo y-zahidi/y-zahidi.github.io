@@ -16,6 +16,7 @@
   <link rel="alternate icon" href="assets/favicon.svg" />
   <link rel="apple-touch-icon" href="assets/og-image.png" />
   <link rel="sitemap" type="application/xml" href="sitemap.xml" />
+  <link rel="alternate" type="application/json" href="resume.json" title="Résumé (JSON Resume schema)" />
   <link rel="me" href="https://github.com/y-zahidi" />
   <link rel="me" href="https://www.linkedin.com/in/yassir-zahidi/" />
 
@@ -27,18 +28,18 @@
   <meta property="og:url" content="https://y-zahidi.github.io/" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:locale:alternate" content="fr_FR" />
-  <meta property="og:image" content="https://y-zahidi.github.io/assets/og-image.png" />
-  <meta property="og:image:secure_url" content="https://y-zahidi.github.io/assets/og-image.png" />
-  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image" content="https://y-zahidi.github.io/assets/og.svg" />
+  <meta property="og:image:secure_url" content="https://y-zahidi.github.io/assets/og.svg" />
+  <meta property="og:image:type" content="image/svg+xml" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Yassir Zahidi — Computer Engineering student & Specialized Technician in Cybersecurity. Stack: Wazuh, Suricata, FortiGate, Sysmon, MISP, Nessus, Docker." />
+  <meta property="og:image:alt" content="Yassir Zahidi — cybersecurity engineer-in-training, SOC / blue team. Stack: Wazuh, Suricata, Sysmon, MISP, FortiGate." />
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Yassir Zahidi — Cybersecurity & Computer Engineering" />
   <meta name="twitter:description" content="Open to SOC analyst / cybersecurity internship 2026. SIEM labs · Wazuh · Suricata · FortiGate · Sysmon." />
-  <meta name="twitter:image" content="https://y-zahidi.github.io/assets/og-image.png" />
+  <meta name="twitter:image" content="https://y-zahidi.github.io/assets/og.svg" />
   <meta name="twitter:image:alt" content="Yassir Zahidi portfolio cover — dark cybersec aesthetic, accent #5cf2c1." />
 
   <!-- Performance hints -->
@@ -46,7 +47,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="dns-prefetch" href="https://github.com" />
   <link rel="dns-prefetch" href="https://img.shields.io" />
-  <link rel="preload" as="image" href="assets/og-image.png" />
+  <link rel="preload" as="image" href="assets/og.svg" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/style.css" />
 
@@ -98,6 +99,21 @@
 <body>
   <a class="skip" href="#main">Skip to content</a>
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+  <div class="crt-overlay" id="crtOverlay" aria-hidden="true"></div>
+
+  <!-- Section indicator (desktop only, sticky right edge) -->
+  <aside class="section-indicator" id="sectionIndicator" aria-hidden="true">
+    <ol>
+      <li data-target="#about"><span class="si-num">01</span><span class="si-name">about</span></li>
+      <li data-target="#case"><span class="si-num">02</span><span class="si-name">case study</span></li>
+      <li data-target="#detect"><span class="si-num">03</span><span class="si-name">detection</span></li>
+      <li data-target="#projects"><span class="si-num">04</span><span class="si-name">projects</span></li>
+      <li data-target="#now"><span class="si-num">05</span><span class="si-name">now</span></li>
+      <li data-target="#stack"><span class="si-num">06</span><span class="si-name">stack</span></li>
+      <li data-target="#certs"><span class="si-num">07</span><span class="si-name">certs</span></li>
+      <li data-target="#contact"><span class="si-num">08</span><span class="si-name">contact</span></li>
+    </ol>
+  </aside>
 
   <header class="topbar">
     <a href="#top" class="brand" aria-label="home">
@@ -111,11 +127,17 @@
       <a href="#certs">certs</a>
       <a href="#contact">contact</a>
     </nav>
-    <button type="button" class="cmdk-trigger" id="cmdkTrigger" aria-label="Open command palette">
-      <span class="cmdk-label">search</span>
-      <kbd>⌘</kbd><kbd>K</kbd>
-    </button>
-    <a class="cv-btn" href="assets/cv-en.pdf" download>Download CV</a>
+    <div class="top-actions">
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Switch theme" title="Switch theme (T)">
+        <span class="th-icon" aria-hidden="true"></span>
+        <span class="th-label" id="themeLabel">midnight</span>
+      </button>
+      <button type="button" class="cmdk-trigger" id="cmdkTrigger" aria-label="Open command palette">
+        <span class="cmdk-label">search</span>
+        <kbd>⌘</kbd><kbd>K</kbd>
+      </button>
+      <a class="cv-btn" href="assets/cv-en.pdf" download>Download CV</a>
+    </div>
   </header>
 
   <!-- ───────── COMMAND PALETTE ───────── -->
@@ -226,7 +248,7 @@
 
     <!-- ───────── CASE STUDY ───────── -->
     <section id="case" class="section">
-      <h2><span class="num">02.</span> Case study — SIEM at the Préfecture de Tétouan</h2>
+      <h2 id="case-h"><span class="num">02.</span> Case study — SIEM at the Préfecture de Tétouan</h2>
       <p class="section-lead">May 2024. One month, on site, real ministry network. Below is what was actually built and what shipped to production. The reproducible lab version is the <a href="https://github.com/y-zahidi/home-lab-siem">home-lab-siem</a> repo.</p>
       <div class="case-grid">
         <div class="case-meta">
@@ -285,9 +307,53 @@
       </details>
     </section>
 
+    <!-- ───────── DETECTION COVERAGE / MITRE ATT&CK MATRIX ───────── -->
+    <section id="detect" class="section">
+      <h2><span class="num">03.</span> Detection coverage</h2>
+      <p class="section-lead">
+        What the lab actually catches, mapped to <a href="https://attack.mitre.org/" target="_blank" rel="noopener">MITRE ATT&amp;CK</a>. Hover any technique to see the rule that fires. Green = covered by a rule I wrote, dim = next on the backlog.
+      </p>
+
+      <div class="matrix-wrap">
+        <div class="matrix-legend" aria-hidden="true">
+          <span class="lg covered"><i></i> covered</span>
+          <span class="lg planned"><i></i> planned</span>
+          <span class="lg out"><i></i> out of scope</span>
+        </div>
+
+        <div class="matrix" id="attMatrix" role="table" aria-label="MITRE ATT&CK detection coverage">
+          <!-- Tactic columns rendered by JS for keyboard nav + tooltip -->
+        </div>
+
+        <p class="matrix-foot">
+          Sources: <a href="https://github.com/y-zahidi/home-lab-siem">home-lab-siem</a> Wazuh ruleset + Suricata signatures. Coverage rebuilt every time I add a rule — not aspirational.
+        </p>
+      </div>
+
+      <!-- Live rule preview, rotates through covered techniques -->
+      <div class="rule-preview" id="rulePreview" aria-live="polite">
+        <div class="rp-bar">
+          <span class="rp-dot"></span>
+          <span class="rp-title" id="rpTitle">T1078 — Valid Accounts</span>
+          <span class="rp-tag" id="rpTag">wazuh · custom-rule</span>
+        </div>
+        <pre class="rp-body" id="rpBody"><code>&lt;rule id="100210" level="10"&gt;
+  &lt;if_group&gt;authentication_failures&lt;/if_group&gt;
+  &lt;same_source_ip /&gt;
+  &lt;same_user /&gt;
+  &lt;different_geoip /&gt;
+  &lt;description&gt;Impossible-travel sign-in: same user, two countries &lt; 1h&lt;/description&gt;
+  &lt;mitre&gt;
+    &lt;id&gt;T1078&lt;/id&gt;
+    &lt;tactic&gt;Initial Access&lt;/tactic&gt;
+  &lt;/mitre&gt;
+&lt;/rule&gt;</code></pre>
+      </div>
+    </section>
+
     <!-- ───────── PROJECTS ───────── -->
     <section id="projects" class="section">
-      <h2><span class="num">03.</span> Projects</h2>
+      <h2><span class="num">04.</span> Projects</h2>
       <p class="section-lead">Five repos shipped, two more in progress. Code is open, READMEs are written, none of them are toy code.</p>
 
       <div class="projects">
@@ -432,7 +498,7 @@
 
     <!-- ───────── NOW ───────── -->
     <section id="now" class="section">
-      <h2><span class="num">04.</span> Now</h2>
+      <h2><span class="num">05.</span> Now</h2>
       <p class="section-lead">A snapshot of what's currently on the workbench. Updated by hand, not generated.</p>
       <div class="now-grid">
         <div class="now-card">
@@ -464,7 +530,7 @@
 
     <!-- ───────── STACK ───────── -->
     <section id="stack" class="section">
-      <h2><span class="num">05.</span> Stack</h2>
+      <h2><span class="num">06.</span> Stack</h2>
       <div class="stack-grid">
         <div class="stack-card">
           <h3>Cybersec</h3>
@@ -495,7 +561,7 @@
 
     <!-- ───────── CERTS ───────── -->
     <section id="certs" class="section">
-      <h2><span class="num">06.</span> Certifications</h2>
+      <h2><span class="num">07.</span> Certifications</h2>
       <p class="section-lead">13 certifications — kept current, all with verification links on LinkedIn.</p>
       <div class="cert-grid">
         <div class="cert"><h4>Fortinet NSE 1–3</h4><span>Fortinet</span></div>
@@ -511,7 +577,7 @@
 
     <!-- ───────── CONTACT ───────── -->
     <section id="contact" class="section contact">
-      <h2><span class="num">07.</span> Get in touch</h2>
+      <h2><span class="num">08.</span> Get in touch</h2>
       <p class="section-lead">
         Recruiting, internship, security side-project, want a second pair of eyes on a SIEM rule — drop me a line.
       </p>
@@ -539,7 +605,33 @@
   <footer class="footer">
     <p>© <span id="year"></span> Yassir Zahidi · built with HTML, CSS &amp; a bit of JS · hosted on GitHub Pages</p>
     <p class="mono">$ exit 0</p>
+    <p class="mono kbd-hint" aria-hidden="true">
+      <kbd>⌘</kbd><kbd>K</kbd> palette · <kbd>g</kbd> <kbd>h</kbd> home · <kbd>g</kbd> <kbd>c</kbd> case · <kbd>g</kbd> <kbd>d</kbd> detection · <kbd>g</kbd> <kbd>p</kbd> projects · <kbd>g</kbd> <kbd>n</kbd> now · <kbd>t</kbd> theme · <kbd>?</kbd> help
+    </p>
   </footer>
+
+  <!-- Keyboard help modal (toggled with ?) -->
+  <div class="khelp" id="kHelp" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts" hidden>
+    <div class="khelp-backdrop" data-khelp-close></div>
+    <div class="khelp-panel">
+      <header><h3>Keyboard shortcuts</h3><button type="button" class="khelp-x" data-khelp-close aria-label="Close">×</button></header>
+      <div class="khelp-grid">
+        <div><kbd>⌘</kbd><kbd>K</kbd></div><div>open command palette</div>
+        <div><kbd>g</kbd> then <kbd>h</kbd></div><div>jump to top</div>
+        <div><kbd>g</kbd> then <kbd>a</kbd></div><div>about</div>
+        <div><kbd>g</kbd> then <kbd>c</kbd></div><div>case study</div>
+        <div><kbd>g</kbd> then <kbd>d</kbd></div><div>detection coverage</div>
+        <div><kbd>g</kbd> then <kbd>p</kbd></div><div>projects</div>
+        <div><kbd>g</kbd> then <kbd>n</kbd></div><div>now</div>
+        <div><kbd>g</kbd> then <kbd>s</kbd></div><div>stack</div>
+        <div><kbd>g</kbd> then <kbd>r</kbd></div><div>certs</div>
+        <div><kbd>g</kbd> then <kbd>m</kbd></div><div>contact</div>
+        <div><kbd>t</kbd></div><div>cycle theme (dark · midnight · paper)</div>
+        <div><kbd>p</kbd></div><div>print / save as PDF</div>
+        <div><kbd>?</kbd></div><div>this help</div>
+      </div>
+    </div>
+  </div>
 
   <script src="assets/main.js" defer></script>
 </body>
