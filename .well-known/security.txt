@@ -1,0 +1,9 @@
+# Security policy for y-zahidi.github.io
+# RFC 9116 — https://www.rfc-editor.org/rfc/rfc9116
+
+Contact: mailto:yassirzahidi8@gmail.com
+Contact: https://github.com/y-zahidi
+Expires: 2027-01-01T00:00:00.000Z
+Preferred-Languages: en, fr
+Canonical: https://y-zahidi.github.io/.well-known/security.txt
+Policy: https://y-zahidi.github.io/#contact

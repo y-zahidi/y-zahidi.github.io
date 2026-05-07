@@ -10,15 +10,30 @@ Pure HTML, CSS, and a tiny bit of JS. No bundler, no framework, no build step. H
 
 ```
 .
-├── index.html
-├── assets/
-│   ├── style.css
-│   ├── main.js
-│   ├── favicon.svg
-│   └── cv-en.pdf        ← drop the latest CV here, the page picks it up
-└── screenshots/
-    └── *.png
+├── index.html             ← single-page portfolio
+├── 404.html               ← branded error page
+├── robots.txt             ← allows everyone (humans, search bots, AI crawlers)
+├── sitemap.xml            ← discoverable structure
+├── humans.txt             ← old-school credits
+├── .well-known/
+│   └── security.txt       ← RFC 9116 contact for vuln reports
+└── assets/
+    ├── style.css
+    ├── main.js
+    ├── favicon.svg
+    ├── og-image.png       ← 1200×630 social card
+    └── cv-en.pdf          ← drop the latest CV here, the page picks it up
 ```
+
+## SEO / share-card checklist
+
+| Asset | Purpose |
+|---|---|
+| `og-image.png` | LinkedIn / Twitter / Slack preview |
+| `sitemap.xml` | feeds Google Search Console |
+| `robots.txt` | explicitly allows GPTBot, ClaudeBot, PerplexityBot |
+| `JSON-LD Person + WebSite` | rich-result eligibility |
+| `404.html` | terminal-themed branded error page |
 
 ## Local preview
 
