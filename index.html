@@ -97,6 +97,7 @@
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
   <header class="topbar">
     <a href="#top" class="brand" aria-label="home">
@@ -110,8 +111,30 @@
       <a href="#certs">certs</a>
       <a href="#contact">contact</a>
     </nav>
+    <button type="button" class="cmdk-trigger" id="cmdkTrigger" aria-label="Open command palette">
+      <span class="cmdk-label">search</span>
+      <kbd>⌘</kbd><kbd>K</kbd>
+    </button>
     <a class="cv-btn" href="assets/cv-en.pdf" download>Download CV</a>
   </header>
+
+  <!-- ───────── COMMAND PALETTE ───────── -->
+  <div class="cmdk" id="cmdk" role="dialog" aria-modal="true" aria-label="Command palette" hidden>
+    <div class="cmdk-backdrop" data-cmdk-close></div>
+    <div class="cmdk-panel">
+      <div class="cmdk-input-wrap">
+        <span class="cmdk-prompt">$</span>
+        <input type="text" id="cmdkInput" autocomplete="off" placeholder="Jump to project, section, or external link…" />
+        <kbd>esc</kbd>
+      </div>
+      <ul class="cmdk-list" id="cmdkList" role="listbox"></ul>
+      <footer class="cmdk-foot">
+        <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+        <span><kbd>↵</kbd> open</span>
+        <span><kbd>esc</kbd> close</span>
+      </footer>
+    </div>
+  </div>
 
   <main id="main">
     <!-- ───────── HERO ───────── -->
@@ -129,18 +152,20 @@
           <p class="lead">
             I build and break things on the security side. SIEM deployments, network hardening, vulnerability scans — and the dev projects that come with engineering school.
           </p>
-          <div class="terminal" aria-hidden="true">
+          <div class="terminal" id="heroTerminal" aria-hidden="true">
             <div class="term-bar">
               <span></span><span></span><span></span>
               <em>~/yassir</em>
             </div>
-            <div class="term-body">
-              <p><span class="prompt">$</span> whoami</p>
-              <p class="out">yassir-zahidi @ rabat, morocco</p>
-              <p><span class="prompt">$</span> stack --short</p>
-              <p class="out">wazuh · suricata · fortigate · nessus · sysmon · misp · docker · linux</p>
-              <p><span class="prompt">$</span> looking_for</p>
-              <p class="out">cybersecurity / SOC / infrastructure security internship — 2026<span class="cursor">&#9608;</span></p>
+            <div class="term-body" id="termBody">
+              <p><span class="prompt">$</span> <span class="typed" data-typed="whoami"></span></p>
+              <p class="out" data-typed="yassir-zahidi @ rabat, morocco"></p>
+              <p><span class="prompt">$</span> <span class="typed" data-typed="stack --short"></span></p>
+              <p class="out" data-typed="wazuh · suricata · fortigate · sysmon · misp · nessus"></p>
+              <p><span class="prompt">$</span> <span class="typed" data-typed="shipped --count"></span></p>
+              <p class="out" data-typed="6 production projects · 13 certs · 1 SIEM deployed in production"></p>
+              <p><span class="prompt">$</span> <span class="typed" data-typed="looking_for"></span></p>
+              <p class="out" data-typed="SOC analyst / blue team / DevSecOps internship — May 2026"><span class="cursor">&#9608;</span></p>
             </div>
           </div>
           <div class="hero-cta">
@@ -153,6 +178,17 @@
           <img src="https://github.com/y-zahidi.png?size=400" alt="Yassir Zahidi" loading="eager" />
           <div class="photo-ring"></div>
         </div>
+      </div>
+    </section>
+
+    <!-- ───────── STATS ───────── -->
+    <section class="stats-strip" aria-label="key numbers">
+      <div class="stats-grid">
+        <div class="stat"><span class="stat-num" data-count="6">0</span><span class="stat-label">production projects shipped</span></div>
+        <div class="stat"><span class="stat-num" data-count="13">0</span><span class="stat-label">cybersecurity certifications</span></div>
+        <div class="stat"><span class="stat-num" data-count="50" data-suffix="+">0</span><span class="stat-label">incidents triaged at ALTEN N1/N2</span></div>
+        <div class="stat"><span class="stat-num" data-count="68" data-suffix="k">0</span><span class="stat-label">records in water-stress warehouse</span></div>
+        <div class="stat"><span class="stat-num" data-count="3" data-prefix="~" data-suffix="min">0</span><span class="stat-label">to spin up the SIEM lab</span></div>
       </div>
     </section>
 
@@ -188,9 +224,70 @@
       </div>
     </section>
 
+    <!-- ───────── CASE STUDY ───────── -->
+    <section id="case" class="section">
+      <h2><span class="num">02.</span> Case study — SIEM at the Préfecture de Tétouan</h2>
+      <p class="section-lead">May 2024. One month, on site, real ministry network. Below is what was actually built and what shipped to production. The reproducible lab version is the <a href="https://github.com/y-zahidi/home-lab-siem">home-lab-siem</a> repo.</p>
+      <div class="case-grid">
+        <div class="case-meta">
+          <div class="case-row"><span>Org</span><strong>Préfecture de Tétouan · Ministère de l'Intérieur (SSIC)</strong></div>
+          <div class="case-row"><span>Role</span><strong>Cybersecurity Intern</strong></div>
+          <div class="case-row"><span>Duration</span><strong>02 May → 31 May 2024</strong></div>
+          <div class="case-row"><span>Scope</span><strong>Multi-layer SIEM, perimeter integration, vuln assessment</strong></div>
+          <div class="case-row"><span>Outcome</span><strong>Detection coverage on FortiGate logs, Sysmon endpoints and Suricata flows, with MISP-driven enrichment</strong></div>
+        </div>
+        <div class="case-arch" aria-label="Architecture diagram">
+<pre>
+  Endpoints (Win/Linux)              Network perimeter
+        │ Sysmon → Wazuh agent             │
+        │                                   │ FortiGate (syslog)
+        │                                   │ Suricata IDS (EVE JSON)
+        ▼                                   ▼
+  ┌──────────────────────────────────────────┐
+  │  Wazuh manager  ·  Wazuh indexer (OS) │
+  │  Decoders · rules · alerts            │
+  │  MISP — IoCs/feeds                    │
+  │  VirusTotal — hash/file enrichment    │
+  │  Nessus — weekly vuln scan            │
+  └───────────────────────┬──────────────────┘
+                            ▼
+                Wazuh dashboard · SOC views
+                MITRE ATT&amp;CK mapping · hunts
+</pre>
+        </div>
+      </div>
+      <details class="case-deep">
+        <summary>What I actually wrote, in detail</summary>
+        <div class="case-deep-body">
+          <h3>Detection</h3>
+          <ul>
+            <li>Custom Wazuh decoder + rules for FortiGate <code>traffic</code> and <code>event</code> logs (failed VPN, geo-anomaly, admin login outside hours).</li>
+            <li>Sysmon channel pulled in via the Wazuh agent on Windows endpoints (process create / network connect / image load).</li>
+            <li>Suricata in IDS mode, EVE JSON tailed by Wazuh → alerts mapped to MITRE ATT&amp;CK techniques.</li>
+          </ul>
+          <h3>Enrichment</h3>
+          <ul>
+            <li>MISP feeds (CIRCL, Abuse.ch) syncing IoCs every 6h; Wazuh integration script tagging alerts with matching threat-intel hits.</li>
+            <li>VirusTotal v3 API for hash + URL lookups on suspicious download alerts.</li>
+          </ul>
+          <h3>Vulnerability management</h3>
+          <ul>
+            <li>Nessus authenticated scans on the Windows fleet, weekly cadence, results piped into the Wazuh vulnerability module.</li>
+            <li>Initial penetration tests inside the lab segment — documented findings and remediation.</li>
+          </ul>
+          <h3>What I would change next time</h3>
+          <ul>
+            <li>Atomic Red Team for continuous detection validation (now in the lab repo).</li>
+            <li>SOAR layer (TheHive + Cortex) to formalise incident handling.</li>
+            <li>Sigma-rule pipeline so detections aren't tied to one engine.</li>
+          </ul>
+        </div>
+      </details>
+    </section>
+
     <!-- ───────── PROJECTS ───────── -->
     <section id="projects" class="section">
-      <h2><span class="num">02.</span> Projects</h2>
+      <h2><span class="num">03.</span> Projects</h2>
       <p class="section-lead">Five repos shipped, two more in progress. Code is open, READMEs are written, none of them are toy code.</p>
 
       <div class="projects">
@@ -333,9 +430,41 @@
       </div>
     </section>
 
+    <!-- ───────── NOW ───────── -->
+    <section id="now" class="section">
+      <h2><span class="num">04.</span> Now</h2>
+      <p class="section-lead">A snapshot of what's currently on the workbench. Updated by hand, not generated.</p>
+      <div class="now-grid">
+        <div class="now-card">
+          <h3>This week</h3>
+          <ul>
+            <li>Atomic Red Team validation pack against the lab Wazuh rules — detection coverage report.</li>
+            <li>MISP <code>misp-modules</code> wired in for hash + url enrichment, instead of one-off scripts.</li>
+            <li>Writing up two HTB boxes (active directory chain + linux pivot) for the writeups repo.</li>
+          </ul>
+        </div>
+        <div class="now-card">
+          <h3>This month</h3>
+          <ul>
+            <li>OSCP-track lab time — buffer overflow refresh, Active Directory attack paths.</li>
+            <li>Sigma rule pipeline so the lab's detections aren't tied to Wazuh alone.</li>
+            <li>Polishing the C++ billing app (FacturationPro) for a 1.0 cut — PDF templates, multi-user.</li>
+          </ul>
+        </div>
+        <div class="now-card">
+          <h3>This quarter</h3>
+          <ul>
+            <li>Internship applications — SOC / blue team / DevSecOps, Morocco / EU / remote, May 2026.</li>
+            <li>CCNA Security track — finishing labs, scheduling exam.</li>
+            <li>Open-sourcing one detection engineering write-up per month.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <!-- ───────── STACK ───────── -->
     <section id="stack" class="section">
-      <h2><span class="num">03.</span> Stack</h2>
+      <h2><span class="num">05.</span> Stack</h2>
       <div class="stack-grid">
         <div class="stack-card">
           <h3>Cybersec</h3>
@@ -366,7 +495,7 @@
 
     <!-- ───────── CERTS ───────── -->
     <section id="certs" class="section">
-      <h2><span class="num">04.</span> Certifications</h2>
+      <h2><span class="num">06.</span> Certifications</h2>
       <p class="section-lead">13 certifications — kept current, all with verification links on LinkedIn.</p>
       <div class="cert-grid">
         <div class="cert"><h4>Fortinet NSE 1–3</h4><span>Fortinet</span></div>
@@ -382,7 +511,7 @@
 
     <!-- ───────── CONTACT ───────── -->
     <section id="contact" class="section contact">
-      <h2><span class="num">05.</span> Get in touch</h2>
+      <h2><span class="num">07.</span> Get in touch</h2>
       <p class="section-lead">
         Recruiting, internship, security side-project, want a second pair of eyes on a SIEM rule — drop me a line.
       </p>
