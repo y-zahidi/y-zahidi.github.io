@@ -112,24 +112,32 @@ const cmdkList = document.getElementById('cmdkList');
 const cmdkTrigger = document.getElementById('cmdkTrigger');
 
 const ITEMS = [
-  { title: 'About',                          hint: 'section', kind: '#', href: '#about' },
-  { title: 'Case study — Tétouan SIEM',      hint: 'section', kind: '#', href: '#case' },
-  { title: 'Projects',                       hint: 'section', kind: '#', href: '#projects' },
-  { title: 'Now — what I\'m building',       hint: 'section', kind: '#', href: '#now' },
-  { title: 'Stack',                          hint: 'section', kind: '#', href: '#stack' },
-  { title: 'Certifications',                 hint: 'section', kind: '#', href: '#certs' },
-  { title: 'Contact',                        hint: 'section', kind: '#', href: '#contact' },
-  { title: 'home-lab-siem',                  hint: 'repo',    kind: '↗', href: 'https://github.com/y-zahidi/home-lab-siem' },
-  { title: 'ctf-writeups',                   hint: 'repo',    kind: '↗', href: 'https://github.com/y-zahidi/ctf-writeups' },
-  { title: 'pentest-cheatsheet',             hint: 'repo',    kind: '↗', href: 'https://github.com/y-zahidi/pentest-cheatsheet' },
-  { title: 'water-stress-morocco-analytics', hint: 'repo',    kind: '↗', href: 'https://github.com/y-zahidi/water-stress-morocco-analytics' },
-  { title: 'FacturationPro-Enterprise',      hint: 'repo',    kind: '↗', href: 'https://github.com/y-zahidi/FacturationPro-Enterprise' },
-  { title: 'HTMLCamp',                       hint: 'repo',    kind: '↗', href: 'https://github.com/y-zahidi/HTMLCamp' },
-  { title: 'Rabat-Cultural-Website',         hint: 'repo',    kind: '↗', href: 'https://github.com/y-zahidi/Rabat-Cultural-Website' },
-  { title: 'GitHub profile',                 hint: 'social',  kind: '↗', href: 'https://github.com/y-zahidi' },
-  { title: 'LinkedIn',                       hint: 'social',  kind: '↗', href: 'https://www.linkedin.com/in/yassir-zahidi/' },
-  { title: 'Email — yassirzahidi8@gmail.com',hint: 'mail',    kind: '✉', href: 'mailto:yassirzahidi8@gmail.com' },
-  { title: 'Download CV (English)',          hint: 'file',    kind: '↓', href: 'assets/cv-en.pdf' },
+  { title: 'About',                          hint: 'section',         kind: '#', href: '#about' },
+  { title: 'Case study — Tétouan SIEM',      hint: 'section',         kind: '#', href: '#case' },
+  { title: 'Blue — detection coverage',      hint: 'section · blue',   kind: '#', href: '#detect' },
+  { title: 'Red — offensive arsenal',        hint: 'section · red',    kind: '#', href: '#offensive' },
+  { title: 'Purple — validation loop',       hint: 'section · purple', kind: '#', href: '#purple' },
+  { title: 'Projects',                       hint: 'section',         kind: '#', href: '#projects' },
+  { title: 'Now — what I\'m building',       hint: 'section',         kind: '#', href: '#now' },
+  { title: 'Achievements',                   hint: 'section',         kind: '#', href: '#achievements' },
+  { title: 'Stack',                          hint: 'section',         kind: '#', href: '#stack' },
+  { title: 'Certifications',                 hint: 'section',         kind: '#', href: '#certs' },
+  { title: 'Contact',                        hint: 'section',         kind: '#', href: '#contact' },
+  { title: 'home-lab-siem',                  hint: 'repo',            kind: '↗', href: 'https://github.com/y-zahidi/home-lab-siem' },
+  { title: 'ctf-writeups',                   hint: 'repo',            kind: '↗', href: 'https://github.com/y-zahidi/ctf-writeups' },
+  { title: 'pentest-cheatsheet',             hint: 'repo',            kind: '↗', href: 'https://github.com/y-zahidi/pentest-cheatsheet' },
+  { title: 'water-stress-morocco-analytics', hint: 'repo',            kind: '↗', href: 'https://github.com/y-zahidi/water-stress-morocco-analytics' },
+  { title: 'FacturationPro-Enterprise',      hint: 'repo',            kind: '↗', href: 'https://github.com/y-zahidi/FacturationPro-Enterprise' },
+  { title: 'HTMLCamp',                       hint: 'repo',            kind: '↗', href: 'https://github.com/y-zahidi/HTMLCamp' },
+  { title: 'Rabat-Cultural-Website',         hint: 'repo',            kind: '↗', href: 'https://github.com/y-zahidi/Rabat-Cultural-Website' },
+  { title: 'GitHub profile',                 hint: 'social',          kind: '↗', href: 'https://github.com/y-zahidi' },
+  { title: 'LinkedIn',                       hint: 'social',          kind: '↗', href: 'https://www.linkedin.com/in/yassir-zahidi/' },
+  { title: 'Email — yassirzahidi8@gmail.com',hint: 'mail',            kind: '✉', href: 'mailto:yassirzahidi8@gmail.com' },
+  { title: 'Download CV (English)',          hint: 'file',            kind: '↓', href: 'assets/cv-en.pdf' },
+  { title: 'Theme · cycle (dark / midnight / paper / phosphor)', hint: 'command', kind: '…', cmd: 'theme' },
+  { title: 'Cmdline · vim-style :command',                       hint: 'command', kind: '…', cmd: 'cmdline' },
+  { title: 'Resume.json — raw JSON Resume schema',                hint: 'file',    kind: '↗', href: 'resume.json' },
+  { title: 'humans.txt',                                          hint: 'file',    kind: '↗', href: 'humans.txt' },
 ];
 
 let active = 0;
@@ -180,6 +188,9 @@ const closeCmdk = () => {
 };
 const go = (it) => {
   if (!it) return;
+  if (it.cmd === 'theme') { closeCmdk(); cycleTheme(); return; }
+  if (it.cmd === 'cmdline') { closeCmdk(); openCmdline && openCmdline(); return; }
+  if (!it.href) { closeCmdk(); return; }
   if (it.href.startsWith('#')) {
     closeCmdk();
     const target = document.querySelector(it.href);
@@ -211,7 +222,7 @@ window.addEventListener('keydown', (e) => {
 /* ──────────────────────────────────────────────────────────
  * theme switcher (dark · midnight · paper)
  * ──────────────────────────────────────────────────────── */
-const THEMES = ['dark', 'midnight', 'paper'];
+const THEMES = ['dark', 'midnight', 'paper', 'phosphor'];
 const themeBtn = document.getElementById('themeToggle');
 const themeLabel = document.getElementById('themeLabel');
 
@@ -242,9 +253,12 @@ const ROUTES = {
   h: { kind: 'top' },
   a: { id: '#about' },
   c: { id: '#case' },
-  d: { id: '#detect' },
+  d: { id: '#detect' },     // blue
+  o: { id: '#offensive' },  // red
+  u: { id: '#purple' },     // purple
   p: { id: '#projects' },
   n: { id: '#now' },
+  w: { id: '#achievements' },
   s: { id: '#stack' },
   r: { id: '#certs' },
   m: { id: '#contact' },
@@ -539,20 +553,212 @@ if (params.has('print') || params.has('cv')) {
 }
 
 /* ──────────────────────────────────────────────────────────
- * one-time CRT boot intro (subtle, skippable, prefers-reduced-motion respected)
+ * SOC boot overlay (one-time, skippable, prefers-reduced-motion respected)
  * ──────────────────────────────────────────────────────── */
 (() => {
+  const boot = document.getElementById('boot');
+  const log  = document.getElementById('bootLog');
+  if (!boot || !log) return;
   if (prefersReducedMotion) return;
   let seen = false;
-  try { seen = localStorage.getItem('yz.crt') === '1'; } catch (_) {}
+  try { seen = localStorage.getItem('yz.boot') === '1'; } catch (_) {}
   if (seen) return;
-  document.documentElement.setAttribute('data-fx', 'crt');
-  setTimeout(() => {
-    document.documentElement.removeAttribute('data-fx');
-    try { localStorage.setItem('yz.crt', '1'); } catch (_) {}
-  }, 1400);
-  // any keypress / click skips it
-  const skip = () => { document.documentElement.removeAttribute('data-fx'); };
-  window.addEventListener('keydown', skip, { once: true });
-  window.addEventListener('click', skip, { once: true });
+  const p = new URLSearchParams(location.search);
+  if (p.has('print') || p.has('cv')) return;
+
+  const lines = [
+    { t: 'ok',   k: '[ ok  ]', m: 'kernel: yz-soc 6.5.0 · booting blue+red+purple init' },
+    { t: 'ok',   k: '[ ok  ]', m: 'wazuh-manager.service started · 6213 rules loaded' },
+    { t: 'ok',   k: '[ ok  ]', m: 'suricata.service started · 14k+ ETOpen sids' },
+    { t: 'ok',   k: '[ ok  ]', m: 'sysmon-collector · logman started' },
+    { t: 'ok',   k: '[ ok  ]', m: 'misp.feed.sync — 142 IOCs in 380ms' },
+    { t: 'ok',   k: '[ ok  ]', m: 'fortigate-syslog · link up' },
+    { t: 'warn', k: '[warn ]', m: 'lab-segment.dc01 · simulated lsass-dump expected at +30s' },
+    { t: 'ok',   k: '[ ok  ]', m: 'atomic-red-team scheduled · 22 tests in rotation' },
+    { t: 'ok',   k: '[ ok  ]', m: 'sigma-pipeline · 14 rules compiled → wazuh + splunk' },
+    { t: 'done', k: '[done ]', m: 'soc operational — mttd<60s · mttr<5min · posture: blue+red+purple' },
+  ];
+  boot.hidden = false; boot.removeAttribute('aria-hidden');
+  document.body.style.overflow = 'hidden';
+  let i = 0;
+  let cancelled = false;
+  const close = () => {
+    if (cancelled) return; cancelled = true;
+    boot.hidden = true; boot.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    try { localStorage.setItem('yz.boot', '1'); } catch (_) {}
+  };
+  const next = () => {
+    if (cancelled) return;
+    if (i >= lines.length) { setTimeout(close, 320); return; }
+    const ln = lines[i++];
+    const li = document.createElement('li');
+    li.className = ln.t;
+    li.innerHTML = `<b>${ln.k}</b> ${ln.m}`;
+    log.appendChild(li);
+    setTimeout(next, 130 + Math.random() * 90);
+  };
+  next();
+  const skip = (e) => {
+    if (e && e.type === 'keydown' && e.key !== 'Escape' && e.key !== ' ' && e.key !== 'Enter') return;
+    close();
+  };
+  boot.addEventListener('click', skip, { once: true });
+  window.addEventListener('keydown', skip);
+})();
+
+/* ──────────────────────────────────────────────────────────
+ * Live ops widget — clock + uptime + rotating IOC + theme echo
+ * ──────────────────────────────────────────────────────── */
+(() => {
+  const root = document.getElementById('liveops');
+  if (!root) return;
+  const clock = document.getElementById('loClock');
+  const uptime = document.getElementById('loUptime');
+  const ioc = document.getElementById('loIoc');
+  const themeEcho = document.getElementById('loTheme');
+  const x = document.getElementById('liveopsX');
+  const start = Date.now();
+  try { if (localStorage.getItem('yz.liveops') === '0') root.classList.add('hidden'); } catch (_) {}
+  const fmtUp = (ms) => {
+    const s = Math.floor(ms / 1000);
+    if (s < 60) return s + 's';
+    const m = Math.floor(s / 60), sr = s % 60;
+    if (m < 60) return m + 'm ' + sr + 's';
+    const h = Math.floor(m / 60), mr = m % 60;
+    return h + 'h ' + mr + 'm';
+  };
+  const iocs = [
+    'sha256:c4f3…d18a (mimikatz)',
+    'ip:185.234.218.41 (c2)',
+    'domain:abuseintel.example.tld',
+    'sha1:1a9f…2b3c (cobaltstrike)',
+    'sid:2008193 · ET malware',
+    'cve:CVE-2024-3094 (xz-utils)',
+    'sha256:88a3…fe09 (lsass.dmp)',
+    'ip:23.94.190.232 (scanner)',
+    'tld:.zip phishing kit',
+    'cve:CVE-2024-21762 (fortios)',
+  ];
+  let iocIdx = Math.floor(Math.random() * iocs.length);
+  const tickClock = () => {
+    const d = new Date();
+    const z = (n) => String(n).padStart(2, '0');
+    if (clock) clock.textContent = z(d.getHours()) + ':' + z(d.getMinutes()) + ':' + z(d.getSeconds());
+    if (uptime) uptime.textContent = fmtUp(Date.now() - start);
+    if (themeEcho) themeEcho.textContent = currentTheme();
+  };
+  const tickIoc = () => { if (ioc) ioc.textContent = iocs[iocIdx++ % iocs.length]; };
+  tickClock(); tickIoc();
+  setInterval(tickClock, 1000);
+  setInterval(tickIoc, 4500);
+  x && x.addEventListener('click', () => {
+    root.classList.add('hidden');
+    try { localStorage.setItem('yz.liveops', '0'); } catch (_) {}
+  });
+})();
+
+/* ──────────────────────────────────────────────────────────
+ * Threat-intel ticker — duplicate track for seamless scroll
+ * ──────────────────────────────────────────────────────── */
+(() => {
+  const track = document.getElementById('tkTrack');
+  if (!track) return;
+  const html = track.innerHTML;
+  track.innerHTML = html + html;
+})();
+
+/* ──────────────────────────────────────────────────────────
+ * Vim-style cmdline — `:` to open, ex commands
+ * ──────────────────────────────────────────────────────── */
+let openCmdline, closeCmdline;
+(() => {
+  const cl = document.getElementById('cmdline');
+  const inp = document.getElementById('cmdlineInput');
+  const hint = document.getElementById('cmdlineHint');
+  if (!cl || !inp) return;
+  const setHint = (s) => {
+    if (!hint) return;
+    hint.textContent = '';
+    hint.appendChild(document.createTextNode(s));
+  };
+  const COMMANDS = {
+    'help':       () => setHint('cmds: theme [name] · about · case · blue · red · purple · projects · now · achievements · stack · certs · contact · cv · print · reset · flag · q'),
+    'theme':      (a) => { if (a && THEMES.includes(a)) applyTheme(a); else cycleTheme(); setHint('theme → ' + currentTheme()); },
+    'about':      () => goRoute({ id: '#about' }),
+    'case':       () => goRoute({ id: '#case' }),
+    'detect':     () => goRoute({ id: '#detect' }),
+    'blue':       () => goRoute({ id: '#detect' }),
+    'offensive':  () => goRoute({ id: '#offensive' }),
+    'red':        () => goRoute({ id: '#offensive' }),
+    'purple':     () => goRoute({ id: '#purple' }),
+    'projects':   () => goRoute({ id: '#projects' }),
+    'now':        () => goRoute({ id: '#now' }),
+    'achievements': () => goRoute({ id: '#achievements' }),
+    'wall':       () => goRoute({ id: '#achievements' }),
+    'stack':      () => goRoute({ id: '#stack' }),
+    'certs':      () => goRoute({ id: '#certs' }),
+    'contact':    () => goRoute({ id: '#contact' }),
+    'mail':       () => { location.href = 'mailto:yassirzahidi8@gmail.com'; },
+    'cv':         () => window.open('assets/cv-en.pdf', '_blank', 'noopener'),
+    'print':      () => window.print(),
+    'flag':       () => setHint('YZ{cmdline_3rd_flag_purple_loop_ftw}'),
+    'reset':      () => { try { ['yz.theme','yz.boot','yz.liveops'].forEach((k) => localStorage.removeItem(k)); } catch (_) {} setHint('reset — reload to replay boot'); },
+    'q':          () => closeCmdline(),
+    'quit':       () => closeCmdline(),
+  };
+  openCmdline = () => {
+    cl.hidden = false; inp.value = ''; setHint('type help');
+    setTimeout(() => inp.focus(), 0);
+  };
+  closeCmdline = () => { cl.hidden = true; };
+  inp.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { e.preventDefault(); closeCmdline(); return; }
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const raw = inp.value.trim();
+      if (!raw) { closeCmdline(); return; }
+      const [name, ...rest] = raw.split(/\s+/);
+      const cmd = COMMANDS[name.toLowerCase()];
+      if (cmd) { cmd(rest[0]); if (!['help', 'theme', 'flag', 'reset'].includes(name.toLowerCase())) closeCmdline(); }
+      else { setHint('not a command: ' + name); }
+    }
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const q = inp.value.toLowerCase();
+      const match = Object.keys(COMMANDS).find((c) => c.startsWith(q));
+      if (match) inp.value = match;
+    }
+  });
+  window.addEventListener('keydown', (e) => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (isTyping(e.target)) return;
+    if (cmdk && !cmdk.hidden) return;
+    if (e.key === ':') { e.preventDefault(); openCmdline(); }
+  });
+})();
+
+/* ──────────────────────────────────────────────────────────
+ * War-room overlay — Konami unlock ↑↑↓↓←→←→ba
+ * ──────────────────────────────────────────────────────── */
+(() => {
+  const wr = document.getElementById('warroom');
+  if (!wr) return;
+  const open = () => { wr.hidden = false; wr.removeAttribute('aria-hidden'); document.body.style.overflow = 'hidden'; };
+  const close = () => { wr.hidden = true; wr.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; };
+  wr.querySelectorAll('[data-wr-close]').forEach((b) => b.addEventListener('click', close));
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !wr.hidden) { e.preventDefault(); close(); }
+  });
+  const seq = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+  let i = 0;
+  window.addEventListener('keydown', (e) => {
+    if (isTyping(e.target)) return;
+    const wanted = seq[i];
+    const k = (e.key.length === 1 ? e.key.toLowerCase() : e.key);
+    if (k === wanted) {
+      i++;
+      if (i === seq.length) { i = 0; open(); }
+    } else { i = (k === seq[0] ? 1 : 0); }
+  });
 })();

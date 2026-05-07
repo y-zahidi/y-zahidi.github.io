@@ -2,16 +2,15 @@
   "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
   "basics": {
     "name": "Yassir Zahidi",
-    "label": "Cybersecurity engineer-in-training · SOC / blue team / detection engineering",
+    "label": "Cybersecurity engineer-in-training · blue + red + purple — SOC · detection engineering · pentest",
     "image": "https://avatars.githubusercontent.com/u/y-zahidi",
     "email": "yassirzahidi8@gmail.com",
     "phone": "",
     "url": "https://y-zahidi.github.io",
-    "summary": "Specialized Technician in Cybersecurity. I build reproducible SIEM labs (Wazuh · Suricata · Sysmon · MISP · FortiGate) and ship code that runs in production. Looking for a SOC / blue-team / DevSecOps internship in 2026.",
+    "summary": "Specialized Technician in Cybersecurity. I work the seam between blue, red and purple: I build reproducible SIEM labs (Wazuh · Suricata · Sysmon · MISP · FortiGate) and then attack them on purpose with TryHackMe / HackTheBox / atomic-red-team to harden the rules. Open to a SOC / detection-engineering / pentest / purple-team internship.",
     "location": {
-      "city": "Rabat",
       "countryCode": "MA",
-      "region": "Rabat-Salé-Kénitra"
+      "region": "Morocco"
     },
     "profiles": [
       { "network": "GitHub",   "username": "y-zahidi",        "url": "https://github.com/y-zahidi" },
@@ -48,7 +47,7 @@
   ],
   "education": [
     {
-      "institution": "École Marocaine des Sciences de l'Ingénieur (EMSI), Rabat",
+      "institution": "École Marocaine des Sciences de l'Ingénieur (EMSI), Morocco",
       "area": "Computer Engineering",
       "studyType": "Engineer's degree (in progress)",
       "startDate": "2024-09",
@@ -75,10 +74,11 @@
     { "name": "Cybersecurity Bootcamp",           "issuer": "Diverse"    }
   ],
   "skills": [
-    { "name": "SIEM / detection",   "level": "applied",     "keywords": ["Wazuh", "Suricata", "Sysmon", "MITRE ATT&CK", "Sigma", "Atomic Red Team"] },
-    { "name": "Threat intel",       "level": "intermediate","keywords": ["MISP", "VirusTotal", "OpenCTI"] },
-    { "name": "Perimeter",          "level": "intermediate","keywords": ["FortiGate", "Nessus", "VLAN", "IPSec"] },
-    { "name": "Offensive (intro)",  "level": "intermediate","keywords": ["Nmap", "Burp Suite", "Metasploit", "Bloodhound", "Mimikatz"] },
+    { "name": "Blue — SIEM / detection",   "level": "applied",     "keywords": ["Wazuh", "Suricata", "Sysmon", "MITRE ATT&CK", "Sigma", "Atomic Red Team"] },
+    { "name": "Threat intel",             "level": "intermediate","keywords": ["MISP", "VirusTotal", "OpenCTI", "CIRCL", "abuse.ch"] },
+    { "name": "Perimeter / network",      "level": "intermediate","keywords": ["FortiGate", "Nessus", "VLAN", "IPSec", "CCNA-track"] },
+    { "name": "Red — pentest",            "level": "intermediate","keywords": ["Nmap", "Burp Suite", "Metasploit", "Bloodhound", "Mimikatz", "CrackMapExec", "Impacket", "OSCP path"] },
+    { "name": "Purple — validation loop", "level": "applied",     "keywords": ["Atomic Red Team", "Sigma", "Caldera-style adversary emulation", "Detection-as-code"] },
     { "name": "OS / system",        "level": "applied",     "keywords": ["Linux (Debian / Ubuntu)", "Windows Server", "Active Directory"] },
     { "name": "Dev",                "level": "applied",     "keywords": ["C / C++ (VCL)", "PHP", "HTML / CSS / JS", "MySQL", "Bash", "Python (basics)"] },
     { "name": "DevOps / data",      "level": "applied",     "keywords": ["Docker / Compose", "Git / GitHub", "QlikView", "WordPress", "VMware Workstation"] }
@@ -135,6 +135,8 @@
   "meta": {
     "canonical": "https://y-zahidi.github.io/resume.json",
     "version":   "v1.0.0",
-    "lastModified": "2026-05-07"
+    "lastModified": "2026-05-07",
+    "availability": "open — remote / EU / Morocco · respond < 24h",
+    "interests": ["SOC analyst", "detection engineering", "pentest / red-team", "purple-team validation", "DevSecOps"]
   }
 }
