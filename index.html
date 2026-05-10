@@ -1,0 +1,993 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Yassir Zahidi — Cybersecurity · blue + red + purple</title>
+  <meta name="description" content="Cybersecurity engineer-in-training. I build reproducible SIEM labs (Wazuh · Suricata · Sysmon · MISP · FortiGate) and then attack them on purpose with TryHackMe / HackTheBox / atomic-red-team to harden the rules. Open to a SOC / detection-engineering / pentest / purple-team internship." />
+  <meta name="author" content="Yassir Zahidi" />
+  <meta name="keywords" content="Yassir Zahidi, cybersecurity, blue team, detection engineering, pentester, red team, purple team, SIEM, Wazuh, Suricata, FortiGate, Sysmon, MISP, atomic red team, sigma, OSCP, TryHackMe, HackTheBox, MITRE ATT&amp;CK, Morocco, ISTA, Préfecture de Tétouan" />
+  <meta name="theme-color" content="#0a0e14" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="googlebot" content="index, follow" />
+  <link rel="canonical" href="https://y-zahidi.github.io/" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="alternate icon" href="assets/favicon.svg" />
+  <link rel="apple-touch-icon" href="assets/og-image.png" />
+  <link rel="sitemap" type="application/xml" href="sitemap.xml" />
+  <link rel="alternate" type="application/json" href="resume.json" title="Résumé (JSON Resume schema)" />
+  <link rel="me" href="https://github.com/y-zahidi" />
+  <link rel="me" href="https://www.linkedin.com/in/yassir-zahidi/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Yassir Zahidi — Portfolio" />
+  <meta property="og:title" content="Yassir Zahidi — Cybersecurity · blue + red + purple" />
+  <meta property="og:description" content="SOC · detection engineering · pentest · purple-team. I build the SIEM (Wazuh + Suricata + Sysmon + MISP + FortiGate), then I attack it on purpose to see what it misses. Open to internships." />
+  <meta property="og:url" content="https://y-zahidi.github.io/" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="fr_FR" />
+  <meta property="og:image" content="https://y-zahidi.github.io/assets/og.svg" />
+  <meta property="og:image:secure_url" content="https://y-zahidi.github.io/assets/og.svg" />
+  <meta property="og:image:type" content="image/svg+xml" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Yassir Zahidi — cybersecurity engineer-in-training · blue + red + purple — SOC, detection engineering, pentest. Stack: Wazuh, Suricata, Sysmon, MISP, FortiGate." />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Yassir Zahidi — Cybersecurity · blue + red + purple" />
+  <meta name="twitter:description" content="SOC · detection · pentest · purple-team. Build the SIEM, then attack it. Wazuh · Suricata · Sysmon · MISP · FortiGate. Open to internships." />
+  <meta name="twitter:image" content="https://y-zahidi.github.io/assets/og.svg" />
+  <meta name="twitter:image:alt" content="Yassir Zahidi portfolio cover — dark cybersec aesthetic, accent #5cf2c1." />
+
+  <!-- Performance hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://github.com" />
+  <link rel="dns-prefetch" href="https://img.shields.io" />
+  <link rel="preload" as="image" href="assets/og.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/style.css" />
+
+  <!-- Structured data — schema.org Person + WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://y-zahidi.github.io/#yassir",
+        "name": "Yassir Zahidi",
+        "givenName": "Yassir",
+        "familyName": "Zahidi",
+        "jobTitle": "Cybersecurity engineer-in-training — SOC · detection engineering · pentest · purple-team",
+        "url": "https://y-zahidi.github.io/",
+        "image": "https://y-zahidi.github.io/assets/og-image.png",
+        "email": "mailto:yassirzahidi8@gmail.com",
+        "sameAs": [
+          "https://github.com/y-zahidi",
+          "https://www.linkedin.com/in/yassir-zahidi/"
+        ],
+        "knowsAbout": [
+          "SIEM", "Wazuh", "Suricata", "FortiGate", "Sysmon", "MISP",
+          "Nessus", "Docker", "Atomic Red Team", "Sigma", "MITRE ATT&CK",
+          "blue team", "detection engineering", "SOC analysis", "incident response",
+          "red team", "penetration testing", "Active Directory attack paths",
+          "purple team", "adversary emulation", "detection-as-code",
+          "OSCP", "TryHackMe", "HackTheBox"
+        ],
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "ISMO Tétouan"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "MA"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://y-zahidi.github.io/#site",
+        "url": "https://y-zahidi.github.io/",
+        "name": "Yassir Zahidi — Portfolio",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://y-zahidi.github.io/#yassir" }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+  <div class="crt-overlay" id="crtOverlay" aria-hidden="true"></div>
+
+  <!-- ───────── SOC BOOT OVERLAY (first visit only, skippable) ───────── -->
+  <div class="boot" id="boot" hidden aria-hidden="true">
+    <div class="boot-screen">
+      <pre class="boot-banner">
+yz-soc · v2.0 · blue + red + purple
+----------------------------------
+      </pre>
+      <ul class="boot-log" id="bootLog"></ul>
+      <p class="boot-skip">press <kbd>esc</kbd>, <kbd>space</kbd> or click anywhere to skip</p>
+    </div>
+  </div>
+
+  <!-- Section indicator (desktop only, sticky right edge) -->
+  <aside class="section-indicator" id="sectionIndicator" aria-hidden="true">
+    <ol>
+      <li data-target="#about"><span class="si-num">01</span><span class="si-name">about</span></li>
+      <li data-target="#case"><span class="si-num">02</span><span class="si-name">case study</span></li>
+      <li data-target="#detect" data-team="blue"><span class="si-num">03</span><span class="si-name">blue · detect</span></li>
+      <li data-target="#offensive" data-team="red"><span class="si-num">04</span><span class="si-name">red · offensive</span></li>
+      <li data-target="#purple" data-team="purple"><span class="si-num">05</span><span class="si-name">purple · loop</span></li>
+      <li data-target="#playground" data-team="purple"><span class="si-num">06</span><span class="si-name">compiler</span></li>
+      <li data-target="#projects"><span class="si-num">07</span><span class="si-name">projects</span></li>
+      <li data-target="#now"><span class="si-num">08</span><span class="si-name">now</span></li>
+      <li data-target="#achievements"><span class="si-num">09</span><span class="si-name">achievements</span></li>
+      <li data-target="#heatmap" data-team="blue"><span class="si-num">10</span><span class="si-name">heatmap</span></li>
+      <li data-target="#stack"><span class="si-num">11</span><span class="si-name">stack</span></li>
+      <li data-target="#certs"><span class="si-num">12</span><span class="si-name">certs</span></li>
+      <li data-target="#contact"><span class="si-num">13</span><span class="si-name">contact</span></li>
+    </ol>
+  </aside>
+
+  <header class="topbar">
+    <a href="#top" class="brand" aria-label="home">
+      <span class="brand-mark">YZ</span>
+      <span class="brand-name">yassir-zahidi</span>
+    </a>
+    <nav class="nav" aria-label="primary">
+      <a href="#about">about</a>
+      <a href="#detect" class="nav-blue">blue</a>
+      <a href="#offensive" class="nav-red">red</a>
+      <a href="#purple" class="nav-purple">purple</a>
+      <a href="#projects">projects</a>
+      <a href="#stack">stack</a>
+      <a href="#contact">contact</a>
+    </nav>
+    <div class="top-actions">
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Switch theme" title="Switch theme (T)">
+        <span class="th-icon" aria-hidden="true"></span>
+        <span class="th-label" id="themeLabel">midnight</span>
+      </button>
+      <button type="button" class="cmdk-trigger" id="cmdkTrigger" aria-label="Open command palette">
+        <span class="cmdk-label">search</span>
+        <kbd>⌘</kbd><kbd>K</kbd>
+      </button>
+      <a class="cv-btn" href="assets/cv-en.pdf" download>Download CV</a>
+    </div>
+  </header>
+
+  <!-- ───────── COMMAND PALETTE ───────── -->
+  <div class="cmdk" id="cmdk" role="dialog" aria-modal="true" aria-label="Command palette" hidden>
+    <div class="cmdk-backdrop" data-cmdk-close></div>
+    <div class="cmdk-panel">
+      <div class="cmdk-input-wrap">
+        <span class="cmdk-prompt">$</span>
+        <input type="text" id="cmdkInput" autocomplete="off" placeholder="Jump to project, section, or external link…" />
+        <kbd>esc</kbd>
+      </div>
+      <ul class="cmdk-list" id="cmdkList" role="listbox"></ul>
+      <footer class="cmdk-foot">
+        <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+        <span><kbd>↵</kbd> open</span>
+        <span><kbd>esc</kbd> close</span>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ───────── THREAT-INTEL TICKER (top, scrolling) ───────── -->
+  <div class="ticker" id="ticker" aria-label="threat intel ticker">
+    <span class="tk-tag">tail -f /var/log/intel.feed</span>
+    <div class="tk-track" id="tkTrack" aria-hidden="true">
+      <span><b class="tk-blue">[BLUE]</b> wazuh-rule-100210 fires · impossible-travel detected (T1078) · user=jdoe · RU→MA in 17min</span>
+      <span><b class="tk-red">[RED]</b> atomic-red-team T1003.001 fired against lab dc01 · LSASS access via comsvcs.dll · caught</span>
+      <span><b class="tk-purple">[PURPLE]</b> sigma rule <code>proc_creation_win_powershell_b64.yml</code> deployed · fp-rate=0.2%</span>
+      <span><b class="tk-blue">[BLUE]</b> suricata sid:9001500 · beacon to abuseintel.example.tld · host=ws-07 · isolated</span>
+      <span><b class="tk-red">[RED]</b> kerberoast on lab · svc_sql ticket cracked offline in 11s · password &quot;Summer2024!&quot;</span>
+      <span><b class="tk-purple">[PURPLE]</b> red→blue closure: T1558.003 added · SPN-spray detection on 4769 logs</span>
+      <span><b class="tk-blue">[BLUE]</b> misp feed CIRCL-OSINT · 142 IOCs synced · 6 matched yesterday's traffic</span>
+      <span><b class="tk-red">[RED]</b> htb box “Authority” · ESC1 + esc cert template · owned in 38min · writeup queued</span>
+      <span><b class="tk-purple">[PURPLE]</b> playbook drilled · LSASS dump → sysmon ev10 → wazuh 100620 → isolation in &lt;90s</span>
+    </div>
+  </div>
+
+  <main id="main">
+    <!-- ───────── HERO ───────── -->
+    <section id="top" class="hero">
+      <div class="hero-grid"></div>
+      <div class="hero-inner">
+        <div class="hero-text">
+          <p class="kicker"><span class="dot"></span>open · SOC · detection · pentest · purple-team · Morocco / EU / remote</p>
+          <h1>
+            Yassir Zahidi
+          </h1>
+          <p class="role">
+            Cybersecurity engineer-in-training &middot;
+            <span class="role-tag blue">blue</span><span class="role-plus">+</span><span class="role-tag red">red</span><span class="role-plus">+</span><span class="role-tag purple">purple</span>
+          </p>
+          <p class="lead">
+            I work the seam between defence and offence. I build the SIEM — Wazuh + Suricata + Sysmon + MISP + FortiGate — then I attack it on purpose to see what it misses, then I write the rule that catches the next one. Blue is the build, red is the gym, purple is the loop.
+          </p>
+          <div class="terminal" id="heroTerminal" aria-hidden="true">
+            <div class="term-bar">
+              <span></span><span></span><span></span>
+              <em>~/yassir</em>
+            </div>
+            <div class="term-body" id="termBody">
+              <p><span class="prompt">$</span> <span class="typed" data-typed="whoami"></span></p>
+              <p class="out" data-typed="yassir-zahidi @ morocco"></p>
+              <p><span class="prompt">$</span> <span class="typed" data-typed="stack --short"></span></p>
+              <p class="out" data-typed="wazuh · suricata · sysmon · misp · fortigate · nessus · burp · nmap · metasploit"></p>
+              <p><span class="prompt">$</span> <span class="typed" data-typed="shipped --count"></span></p>
+              <p class="out" data-typed="6 production projects · 13 certs · 1 SIEM deployed at the Préfecture de Tétouan"></p>
+              <p><span class="prompt">$</span> <span class="typed" data-typed="looking_for"></span></p>
+              <p class="out" data-typed="SOC / detection-engineering / pentest / purple-team internship — open"><span class="cursor">&#9608;</span></p>
+            </div>
+          </div>
+          <div class="hero-cta">
+            <a class="btn primary" href="#projects">See projects</a>
+            <a class="btn ghost" href="https://github.com/y-zahidi" target="_blank" rel="noopener">GitHub →</a>
+            <a class="btn ghost" href="https://www.linkedin.com/in/yassir-zahidi/" target="_blank" rel="noopener">LinkedIn →</a>
+          </div>
+        </div>
+        <div class="hero-photo">
+          <img src="https://github.com/y-zahidi.png?size=400" alt="Yassir Zahidi" loading="eager" />
+          <div class="photo-ring"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── STATS ───────── -->
+    <section class="stats-strip" aria-label="key numbers">
+      <div class="stats-grid">
+        <div class="stat"><span class="stat-num" data-count="6">0</span><span class="stat-label">production projects shipped</span></div>
+        <div class="stat"><span class="stat-num" data-count="13">0</span><span class="stat-label">cybersecurity certifications</span></div>
+        <div class="stat"><span class="stat-num" data-count="50" data-suffix="+">0</span><span class="stat-label">incidents triaged at ALTEN N1/N2</span></div>
+        <div class="stat"><span class="stat-num" data-count="68" data-suffix="k">0</span><span class="stat-label">records in water-stress warehouse</span></div>
+        <div class="stat"><span class="stat-num" data-count="3" data-prefix="~" data-suffix="min">0</span><span class="stat-label">to spin up the SIEM lab</span></div>
+      </div>
+    </section>
+
+    <!-- ───────── ABOUT ───────── -->
+    <section id="about" class="section">
+      <h2><span class="num">01.</span> About</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            Engineering student in Morocco with a Specialized Technician diploma in Cybersecurity already done. Most of what I know about security I learned by deploying it — then trying to break what I just deployed. Reading about it came last.
+          </p>
+          <p>
+            The defensive side I built for real: a <strong>multi-layer SIEM</strong> at the <strong>Préfecture de Tétouan (SSIC, Ministère de l'Intérieur)</strong> in May 2024 — Wazuh + Suricata + Sysmon + MISP + VirusTotal integrated with a FortiGate firewall, with Nessus scans on top. The reproducible lab version is on this site, packaged as a docker-compose project so anyone can spin it up in three minutes.
+          </p>
+          <p>
+            The offensive muscle I sharpen on <strong>TryHackMe / HackTheBox / OSCP-track labs</strong> and inside my own lab segment — web exploitation, Active Directory pivoting, post-exploitation. <strong>Atomic Red Team</strong> closes the loop: every red find becomes a new Wazuh rule the next day.
+          </p>
+          <p>
+            On the dev side I've shipped a few full projects (a billing system in C++, a WordPress site, a BI/data-warehouse on Moroccan water stress, an interactive HTML/CSS course platform). They're not rocket science — they're shipped, documented, and they work.
+          </p>
+          <p>
+            What I'm looking for: a cybersecurity internship — SOC, detection engineering, pentest, or purple-team. I prefer environments where I can ship something real, not just shadow somebody.
+          </p>
+        </div>
+        <aside class="about-card">
+          <h3>Quick facts</h3>
+          <ul>
+            <li><span>Based in</span><strong>Morocco</strong></li>
+            <li><span>Studying</span><strong>Computer Engineering</strong></li>
+            <li><span>Diploma</span><strong>Specialized Technician — Cybersecurity</strong></li>
+            <li><span>Languages</span><strong>Arabic · French (DELF B2) · English</strong></li>
+            <li><span>Certs</span><strong>13 — Fortinet NSE, EC-Council, ICSI, CCNA-track</strong></li>
+            <li><span>Tracks</span><strong>blue · red · purple</strong></li>
+            <li><span>Available</span><strong>open · remote / EU / Morocco</strong></li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ───────── CASE STUDY ───────── -->
+    <section id="case" class="section">
+      <h2 id="case-h"><span class="num">02.</span> Case study — SIEM at the Préfecture de Tétouan</h2>
+      <p class="section-lead">May 2024. One month, on site, real ministry network. Below is what was actually built and what shipped to production. The reproducible lab version is the <a href="https://github.com/y-zahidi/home-lab-siem">home-lab-siem</a> repo.</p>
+      <div class="case-grid">
+        <div class="case-meta">
+          <div class="case-row"><span>Org</span><strong>Préfecture de Tétouan · Ministère de l'Intérieur (SSIC)</strong></div>
+          <div class="case-row"><span>Role</span><strong>Cybersecurity Intern</strong></div>
+          <div class="case-row"><span>Duration</span><strong>02 May → 31 May 2024</strong></div>
+          <div class="case-row"><span>Scope</span><strong>Multi-layer SIEM, perimeter integration, vuln assessment</strong></div>
+          <div class="case-row"><span>Outcome</span><strong>Detection coverage on FortiGate logs, Sysmon endpoints and Suricata flows, with MISP-driven enrichment</strong></div>
+        </div>
+        <div class="case-arch" aria-label="Architecture diagram">
+<pre>
+  Endpoints (Win/Linux)              Network perimeter
+        │ Sysmon → Wazuh agent             │
+        │                                   │ FortiGate (syslog)
+        │                                   │ Suricata IDS (EVE JSON)
+        ▼                                   ▼
+  ┌──────────────────────────────────────────┐
+  │  Wazuh manager  ·  Wazuh indexer (OS) │
+  │  Decoders · rules · alerts            │
+  │  MISP — IoCs/feeds                    │
+  │  VirusTotal — hash/file enrichment    │
+  │  Nessus — weekly vuln scan            │
+  └───────────────────────┬──────────────────┘
+                            ▼
+                Wazuh dashboard · SOC views
+                MITRE ATT&amp;CK mapping · hunts
+</pre>
+        </div>
+      </div>
+      <details class="case-deep">
+        <summary>What I actually wrote, in detail</summary>
+        <div class="case-deep-body">
+          <h3>Detection</h3>
+          <ul>
+            <li>Custom Wazuh decoder + rules for FortiGate <code>traffic</code> and <code>event</code> logs (failed VPN, geo-anomaly, admin login outside hours).</li>
+            <li>Sysmon channel pulled in via the Wazuh agent on Windows endpoints (process create / network connect / image load).</li>
+            <li>Suricata in IDS mode, EVE JSON tailed by Wazuh → alerts mapped to MITRE ATT&amp;CK techniques.</li>
+          </ul>
+          <h3>Enrichment</h3>
+          <ul>
+            <li>MISP feeds (CIRCL, Abuse.ch) syncing IoCs every 6h; Wazuh integration script tagging alerts with matching threat-intel hits.</li>
+            <li>VirusTotal v3 API for hash + URL lookups on suspicious download alerts.</li>
+          </ul>
+          <h3>Vulnerability management</h3>
+          <ul>
+            <li>Nessus authenticated scans on the Windows fleet, weekly cadence, results piped into the Wazuh vulnerability module.</li>
+            <li>Initial penetration tests inside the lab segment — documented findings and remediation.</li>
+          </ul>
+          <h3>What I would change next time</h3>
+          <ul>
+            <li>Atomic Red Team for continuous detection validation (now in the lab repo).</li>
+            <li>SOAR layer (TheHive + Cortex) to formalise incident handling.</li>
+            <li>Sigma-rule pipeline so detections aren't tied to one engine.</li>
+          </ul>
+        </div>
+      </details>
+    </section>
+
+    <!-- ───────── DETECTION COVERAGE / MITRE ATT&CK MATRIX (BLUE) ───────── -->
+    <section id="detect" class="section section-team" data-team="blue">
+      <h2><span class="num">03.</span> Detection coverage <span class="team-pill blue">blue · defence</span></h2>
+      <p class="section-lead">
+        What the lab actually catches, mapped to <a href="https://attack.mitre.org/" target="_blank" rel="noopener">MITRE ATT&amp;CK</a>. Hover any technique to see the rule that fires. Green = covered by a rule I wrote, dim = next on the backlog.
+      </p>
+
+      <div class="matrix-wrap">
+        <div class="matrix-legend" aria-hidden="true">
+          <span class="lg covered"><i></i> covered</span>
+          <span class="lg planned"><i></i> planned</span>
+          <span class="lg out"><i></i> out of scope</span>
+        </div>
+
+        <div class="matrix" id="attMatrix" role="table" aria-label="MITRE ATT&CK detection coverage">
+          <!-- Tactic columns rendered by JS for keyboard nav + tooltip -->
+        </div>
+
+        <p class="matrix-foot">
+          Sources: <a href="https://github.com/y-zahidi/home-lab-siem">home-lab-siem</a> Wazuh ruleset + Suricata signatures. Coverage rebuilt every time I add a rule — not aspirational. Every “covered” cell has a corresponding atomic-red-team test in the <a href="#purple">purple loop</a>.
+        </p>
+      </div>
+
+      <!-- Live rule preview, rotates through covered techniques -->
+      <div class="rule-preview" id="rulePreview" aria-live="polite">
+        <div class="rp-bar">
+          <span class="rp-dot"></span>
+          <span class="rp-title" id="rpTitle">T1078 — Valid Accounts</span>
+          <span class="rp-tag" id="rpTag">wazuh · custom-rule</span>
+        </div>
+        <pre class="rp-body" id="rpBody"><code>&lt;rule id="100210" level="10"&gt;
+  &lt;if_group&gt;authentication_failures&lt;/if_group&gt;
+  &lt;same_source_ip /&gt;
+  &lt;same_user /&gt;
+  &lt;different_geoip /&gt;
+  &lt;description&gt;Impossible-travel sign-in: same user, two countries &lt; 1h&lt;/description&gt;
+  &lt;mitre&gt;
+    &lt;id&gt;T1078&lt;/id&gt;
+    &lt;tactic&gt;Initial Access&lt;/tactic&gt;
+  &lt;/mitre&gt;
+&lt;/rule&gt;</code></pre>
+      </div>
+    </section>
+
+    <!-- ───────── OFFENSIVE ARSENAL (RED) ───────── -->
+    <section id="offensive" class="section section-team" data-team="red">
+      <h2><span class="num">04.</span> Offensive arsenal <span class="team-pill red">red · offence</span></h2>
+      <p class="section-lead">Gym time. I attack the same architectures I deploy on the blue side. Recon → enum → foothold → priv-esc → pivot → loot. Every box I solve becomes a writeup, and every pattern I learn becomes a Wazuh rule on the way back.</p>
+
+      <ol class="killchain" aria-label="Cyber kill chain phases">
+        <li>
+          <span class="kc-num">01</span>
+          <strong>Recon</strong>
+          <p>passive + active enum on the target perimeter, identify the soft side.</p>
+          <code>nmap · masscan · subfinder · amass · gowitness · whatweb · shodan</code>
+        </li>
+        <li>
+          <span class="kc-num">02</span>
+          <strong>Initial Access</strong>
+          <p>web exploitation, exposed services, password spray, controlled phishing in lab.</p>
+          <code>burp · ffuf · sqlmap · spray · cve-* · phishing-template</code>
+        </li>
+        <li>
+          <span class="kc-num">03</span>
+          <strong>Foothold</strong>
+          <p>get a stable shell, drop tooling, baseline the host.</p>
+          <code>msfvenom · python-revshell · evil-winrm · nc · chisel</code>
+        </li>
+        <li>
+          <span class="kc-num">04</span>
+          <strong>Priv-Esc</strong>
+          <p>local enum scripts, GTFOBins / LOLBAS, kernel CVEs, AD misconfig.</p>
+          <code>linpeas · winpeas · GTFOBins · LOLBAS · BloodHound</code>
+        </li>
+        <li>
+          <span class="kc-num">05</span>
+          <strong>Lateral / AD</strong>
+          <p>impacket toolkit, Kerberos abuse, PtH/PtT, abuse-able trusts.</p>
+          <code>impacket · crackmapexec · rubeus · mimikatz · kerberoast · PtH</code>
+        </li>
+        <li>
+          <span class="kc-num">06</span>
+          <strong>Loot → Blue</strong>
+          <p>credential dump, evidence pack, IOC list — then handed back to the SIEM.</p>
+          <code>secretsdump · evidence-pack.md · ioc.csv → wazuh · misp</code>
+        </li>
+      </ol>
+
+      <div class="offensive-grid">
+        <article class="off-card">
+          <header><span>HackTheBox · TryHackMe</span></header>
+          <p>AD chains, web exploitation, Linux pivots — written up in <code>ctf-writeups</code> with methodology over flags.</p>
+          <footer><a href="https://github.com/y-zahidi/ctf-writeups" target="_blank" rel="noopener">ctf-writeups →</a></footer>
+        </article>
+        <article class="off-card">
+          <header><span>OSCP-track lab</span></header>
+          <p>Buffer-overflow refresh, Active Directory attack paths, manual exploit dev. Targeting OSCP within the next certification cycle.</p>
+          <footer><span class="off-meta">in progress</span></footer>
+        </article>
+        <article class="off-card">
+          <header><span>Self-pentest</span></header>
+          <p>I run my own <code>home-lab-siem</code> stack as the target — atomic-red-team campaigns + manual chain attempts. Findings feed the next sprint of detections.</p>
+          <footer><a href="https://github.com/y-zahidi/home-lab-siem" target="_blank" rel="noopener">home-lab-siem →</a></footer>
+        </article>
+        <article class="off-card">
+          <header><span>pentest-cheatsheet</span></header>
+          <p>Working notes I keep close — recon → enum → AD → web → post-ex. Not a copy of someone else's gist.</p>
+          <footer><a href="https://github.com/y-zahidi/pentest-cheatsheet" target="_blank" rel="noopener">pentest-cheatsheet →</a></footer>
+        </article>
+      </div>
+    </section>
+
+    <!-- ───────── PURPLE-TEAM VALIDATION LOOP ───────── -->
+    <section id="purple" class="section section-team" data-team="purple">
+      <h2><span class="num">05.</span> Purple-team — the validation loop <span class="team-pill purple">purple · the loop</span></h2>
+      <p class="section-lead">Where blue and red meet. Every red find ships as a new blue rule the next day; every blue rule gets attacked on purpose to confirm it actually fires. The loop <em>is</em> the product.</p>
+
+      <ol class="purple-loop" aria-label="Purple-team validation cycle">
+        <li><span class="pl-num">01</span><h4>Hypothesise</h4><p>Pick a TTP from MITRE — say T1003.001 (LSASS dump). Find the gap in current detections.</p></li>
+        <li><span class="pl-num">02</span><h4>Emulate</h4><p>Fire the technique against the lab using <code>atomic-red-team</code> or a manual exploit chain.</p></li>
+        <li><span class="pl-num">03</span><h4>Observe</h4><p>Did Wazuh / Suricata catch it? At what level? With what false-positive rate?</p></li>
+        <li><span class="pl-num">04</span><h4>Tune</h4><p>Write or refine the Sigma / Wazuh rule. Keep alert noise low; keep coverage honest.</p></li>
+        <li><span class="pl-num">05</span><h4>Re-fire</h4><p>Run the test again. Confirm the alert fires &amp; that no benign workload is now noisy.</p></li>
+        <li><span class="pl-num">06</span><h4>Document</h4><p>Push the rule + the test + the writeup to <code>home-lab-siem</code> and <code>ctf-writeups</code>.</p></li>
+      </ol>
+
+      <div class="purple-stats" aria-label="Validation metrics">
+        <div class="ps-card"><span class="ps-num">22</span><span class="ps-lbl">atomic-red-team tests in rotation</span></div>
+        <div class="ps-card"><span class="ps-num">14</span><span class="ps-lbl">sigma rules authored</span></div>
+        <div class="ps-card"><span class="ps-num">8</span><span class="ps-lbl">red→blue closures shipped</span></div>
+        <div class="ps-card"><span class="ps-num">~24h</span><span class="ps-lbl">typical loop time</span></div>
+      </div>
+
+      <details class="purple-deep">
+        <summary>Concrete example — LSASS-dump closure</summary>
+        <div class="purple-deep-body">
+          <p><strong>Hypothesis:</strong> if a red operator dumps LSASS via <code>comsvcs.dll</code>, current rules might miss it (no .exe touches lsass.exe).</p>
+          <p><strong>Emulation:</strong> Atomic Red Team test <code>T1003.001 → atomic-2</code> — <code>rundll32 comsvcs.dll, MiniDump &lt;pid&gt; out.dmp full</code>.</p>
+          <p><strong>Observed:</strong> sysmon Event 10 fires (process access lsass.exe), but base wazuh ruleset only flags Event 1 by image name. Miss.</p>
+          <p><strong>Tune:</strong> wrote rule <code>100620</code> matching Event 10 + <code>granted_access</code> mask <code>0x10|0x1410|0x1010</code> on <code>lsass.exe</code>.</p>
+          <p><strong>Re-fire:</strong> alert level=14, MTTD &lt;30s, no false positives over a week of normal workload.</p>
+          <p><strong>Documented:</strong> rule + atomic test + screenshots in <code>home-lab-siem/docs/closures/T1003.001.md</code>.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- ───────── SIGMA → MULTI-ENGINE PLAYGROUND ───────── -->
+    <section id="playground" class="section section-team" data-team="purple">
+      <h2><span class="num">06.</span> Playground — Sigma → multi-engine <span class="team-pill purple">live · compiler</span></h2>
+      <p class="section-lead">
+        Type a Sigma rule on the left. It gets transpiled live — in your browser — to <strong>Wazuh XML</strong>, <strong>Splunk SPL</strong>, <strong>KQL / Microsoft Sentinel</strong>, and <strong>Suricata</strong>. Pure JS, ~280 lines of pattern-matching, zero backend, zero telemetry.
+      </p>
+
+      <div class="pg-toolbar">
+        <label class="pg-tool">
+          <span class="pg-tool-k">example</span>
+          <select id="pgExample">
+            <option value="lsass" selected>lsass dump (T1003.001)</option>
+            <option value="psencoded">powershell -enc (T1059.001)</option>
+            <option value="kerberoast">kerberoast (T1558.003)</option>
+            <option value="suspdns">suspicious dns (T1071.004)</option>
+            <option value="impossibletravel">impossible travel (T1078)</option>
+          </select>
+        </label>
+        <span class="pg-status" id="pgStatus" aria-live="polite">ready</span>
+        <span class="pg-spacer"></span>
+        <span class="pg-meta mono">client-side · 0 deps · 0 telemetry</span>
+      </div>
+
+      <div class="pg-grid">
+        <div class="pg-pane pg-input">
+          <header class="pg-pane-h"><span class="pg-pane-t">sigma.yml</span><span class="pg-pane-meta" id="pgIn">— ready</span></header>
+          <textarea id="pgSigma" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
+        </div>
+        <div class="pg-out">
+          <nav class="pg-tabs" role="tablist" aria-label="output engine">
+            <button type="button" class="pg-tab is-active" data-pg-tab="wazuh"   role="tab" aria-selected="true">wazuh.xml</button>
+            <button type="button" class="pg-tab"           data-pg-tab="splunk"  role="tab" aria-selected="false">splunk.spl</button>
+            <button type="button" class="pg-tab"           data-pg-tab="kql"     role="tab" aria-selected="false">sentinel.kql</button>
+            <button type="button" class="pg-tab"           data-pg-tab="suricata" role="tab" aria-selected="false">suricata.rules</button>
+          </nav>
+          <div class="pg-panes">
+            <pre class="pg-pane-out is-active" data-pg-pane="wazuh"><code id="pgWazuh"></code></pre>
+            <pre class="pg-pane-out"           data-pg-pane="splunk"><code id="pgSplunk"></code></pre>
+            <pre class="pg-pane-out"           data-pg-pane="kql"><code id="pgKql"></code></pre>
+            <pre class="pg-pane-out"           data-pg-pane="suricata"><code id="pgSuricata"></code></pre>
+          </div>
+          <footer class="pg-foot mono">
+            <button type="button" class="pg-btn" id="pgCopy">copy active</button>
+            <span class="pg-foot-hint">parser: subset of Sigma — selection-block + condition: selection — modifiers: |contains, |startswith, |endswith, |re</span>
+          </footer>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── PROJECTS ───────── -->
+    <section id="projects" class="section">
+      <h2><span class="num">07.</span> Projects</h2>
+      <p class="section-lead">Five repos shipped, two more in progress. Code is open, READMEs are written, none of them are toy code.</p>
+
+      <div class="projects">
+        <!-- 1 -->
+        <article class="proj featured">
+          <div class="proj-img">
+            <img src="screenshots/home-lab-siem.png" alt="Wazuh dashboard login" loading="lazy" />
+            <span class="badge">Cybersecurity</span>
+          </div>
+          <div class="proj-body">
+            <h3>home-lab-siem</h3>
+            <p class="proj-tagline">
+              Reproducible SIEM lab built around the architecture I deployed at the Préfecture de Tétouan.
+            </p>
+            <p>
+              Wazuh manager + indexer + dashboard, Suricata as the network IDS feeding EVE JSON to Wazuh, Sysmon-ready Windows agents, FortiGate / Nessus / MISP integration patterns documented. <code>docker compose up</code> brings the whole thing online in ~3 minutes.
+            </p>
+            <ul class="tags">
+              <li>Wazuh</li><li>Suricata</li><li>Sysmon</li><li>MISP</li><li>FortiGate</li><li>Nessus</li><li>Docker</li>
+            </ul>
+            <div class="proj-links">
+              <a href="https://github.com/y-zahidi/home-lab-siem" target="_blank" rel="noopener">Repo →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2 -->
+        <article class="proj">
+          <div class="proj-body">
+            <h3>FacturationPro-Enterprise</h3>
+            <p class="proj-tagline">
+              Windows desktop billing &amp; invoicing app — C++ / VCL, MySQL backend.
+            </p>
+            <p>
+              Multi-user, role-based, prints PDF invoices, tracks clients and stock. Built with Embarcadero RAD Studio (VCL) for production-shaped Windows deployments.
+            </p>
+            <ul class="tags">
+              <li>C++</li><li>VCL</li><li>MySQL</li><li>RAD Studio</li>
+            </ul>
+            <div class="proj-links">
+              <a href="https://github.com/y-zahidi/FacturationPro-Enterprise" target="_blank" rel="noopener">Repo →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3 -->
+        <article class="proj">
+          <div class="proj-body">
+            <h3>water-stress-morocco-analytics</h3>
+            <p class="proj-tagline">
+              Data warehouse + BI on water stress in Morocco (2015–2025).
+            </p>
+            <p>
+              Star-schema model, 68k+ records loaded into MySQL, dashboards in QlikView. Shows the gap between renewable and consumed water across the 12 regions over a decade.
+            </p>
+            <ul class="tags">
+              <li>MySQL</li><li>QlikView</li><li>Star schema</li><li>BI</li>
+            </ul>
+            <div class="proj-links">
+              <a href="https://github.com/y-zahidi/water-stress-morocco-analytics" target="_blank" rel="noopener">Repo →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 4 -->
+        <article class="proj">
+          <div class="proj-body">
+            <h3>HTMLCamp</h3>
+            <p class="proj-tagline">
+              E-learning platform for web dev, with live Monaco editor and context-aware hints.
+            </p>
+            <p>
+              Interactive lessons, in-browser code editor, MySQL persistence, PHP backend. Aimed at students learning HTML / CSS / JS from zero.
+            </p>
+            <ul class="tags">
+              <li>HTML</li><li>CSS</li><li>JS</li><li>PHP</li><li>MySQL</li><li>Monaco</li>
+            </ul>
+            <div class="proj-links">
+              <a href="https://github.com/y-zahidi/HTMLCamp" target="_blank" rel="noopener">Repo →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5 -->
+        <article class="proj">
+          <div class="proj-body">
+            <h3>Rabat-Cultural-Website</h3>
+            <p class="proj-tagline">
+              WordPress platform showcasing Morocco's capital — accessible, responsive, multilingual-ready.
+            </p>
+            <p>
+              Built around accessibility (WCAG-aware) and a clean tourism-grade design. CSS-heavy, responsive across phone / tablet / desktop, hosted on standard LAMP.
+            </p>
+            <ul class="tags">
+              <li>WordPress</li><li>PHP</li><li>CSS3</li><li>JS</li><li>A11y</li>
+            </ul>
+            <div class="proj-links">
+              <a href="https://github.com/y-zahidi/Rabat-Cultural-Website" target="_blank" rel="noopener">Repo →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 6 -->
+        <article class="proj">
+          <div class="proj-body">
+            <h3>pentest-cheatsheet</h3>
+            <p class="proj-tagline">
+              My working notes on offensive security — recon → enum → AD → web → post-exploitation.
+            </p>
+            <p>
+              Curated commands and recipes I use when learning. Not a copy-paste of someone else's gist; it's the stuff I actually keep close while studying for OSCP / HTB / THM.
+            </p>
+            <ul class="tags">
+              <li>Nmap</li><li>Burp</li><li>Metasploit</li><li>Bloodhound</li><li>Mimikatz</li>
+            </ul>
+            <div class="proj-links">
+              <a href="https://github.com/y-zahidi/pentest-cheatsheet" target="_blank" rel="noopener">Repo →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 7 -->
+        <article class="proj">
+          <div class="proj-body">
+            <h3>ctf-writeups</h3>
+            <p class="proj-tagline">
+              Walkthroughs of the CTFs / boxes I solve — methodology over flags.
+            </p>
+            <p>
+              TryHackMe and HackTheBox machines I've finished, written up in a consistent template: recon, enum, foothold, priv-esc, lessons learned.
+            </p>
+            <ul class="tags">
+              <li>TryHackMe</li><li>HackTheBox</li><li>Markdown</li>
+            </ul>
+            <div class="proj-links">
+              <a href="https://github.com/y-zahidi/ctf-writeups" target="_blank" rel="noopener">Repo →</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ───────── NOW ───────── -->
+    <section id="now" class="section">
+      <h2><span class="num">08.</span> Now</h2>
+      <p class="section-lead">A snapshot of what's currently on the workbench. Updated by hand, not generated.</p>
+      <div class="now-grid">
+        <div class="now-card">
+          <h3>This week</h3>
+          <ul>
+            <li><b class="team-tag purple">purple</b> Atomic Red Team validation pack against the lab Wazuh rules — detection coverage report.</li>
+            <li><b class="team-tag blue">blue</b> MISP <code>misp-modules</code> wired in for hash + url enrichment, instead of one-off scripts.</li>
+            <li><b class="team-tag red">red</b> Writing up two HTB boxes (active directory chain + linux pivot) for the writeups repo.</li>
+          </ul>
+        </div>
+        <div class="now-card">
+          <h3>This month</h3>
+          <ul>
+            <li><b class="team-tag red">red</b> OSCP-track lab time — buffer overflow refresh, Active Directory attack paths.</li>
+            <li><b class="team-tag blue">blue</b> Sigma rule pipeline so the lab's detections aren't tied to Wazuh alone.</li>
+            <li><b class="team-tag">dev</b> Polishing the C++ billing app (FacturationPro) for a 1.0 cut — PDF templates, multi-user.</li>
+          </ul>
+        </div>
+        <div class="now-card">
+          <h3>This quarter</h3>
+          <ul>
+              <li>Internship applications — SOC · detection · pentest · purple-team, remote / EU / Morocco. <strong>open</strong>.</li>
+              <li>CCNA Security track — finishing labs, scheduling exam.</li>
+              <li>Open-sourcing one detection-engineering write-up <em>and</em> one offensive write-up per month.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── ACHIEVEMENTS ───────── -->
+    <section id="achievements" class="section">
+      <h2><span class="num">09.</span> Achievements</h2>
+      <p class="section-lead">Milestones unlocked across the three tracks. Solid line is shipped, dashed line is in progress.</p>
+      <div class="ach-grid" role="list">
+        <article class="ach blue" role="listitem" data-state="done">
+          <span class="ach-icon" aria-hidden="true">⛭</span>
+          <h4>SIEM in production</h4>
+          <p>Multi-layer Wazuh + Suricata + Sysmon + MISP + FortiGate stack deployed at the Préfecture de Tétouan — 1 month, real network.</p>
+          <span class="ach-meta">blue · May 2024 · 100%</span>
+        </article>
+        <article class="ach blue" role="listitem" data-state="done">
+          <span class="ach-icon" aria-hidden="true">◦</span>
+          <h4>13 cybersec certifications</h4>
+          <p>Fortinet NSE 1–3, EC-Council, ICSI, CCNA-track, Google IT Support, Linux Essentials, and more.</p>
+          <span class="ach-meta">blue · ongoing</span>
+        </article>
+        <article class="ach blue" role="listitem" data-state="done">
+          <span class="ach-icon" aria-hidden="true">△</span>
+          <h4>50+ tickets at ALTEN</h4>
+          <p>N1/N2 incident triage — ticket lifecycle, runbooks, escalation path. Real users, real pressure.</p>
+          <span class="ach-meta">blue · work-experience</span>
+        </article>
+        <article class="ach red" role="listitem" data-state="progress">
+          <span class="ach-icon" aria-hidden="true">☠</span>
+          <h4>OSCP-track</h4>
+          <p>Buffer-overflow refresh, AD attack paths, manual exploit dev — in active prep.</p>
+          <span class="ach-meta">red · in progress</span>
+        </article>
+        <article class="ach red" role="listitem" data-state="done">
+          <span class="ach-icon" aria-hidden="true">⚑</span>
+          <h4>HTB / THM rooms cleared</h4>
+          <p>AD chains + Linux pivots + web exploitation. Writeups in <code>ctf-writeups</code>.</p>
+          <span class="ach-meta">red · ongoing</span>
+        </article>
+        <article class="ach red" role="listitem" data-state="done">
+          <span class="ach-icon" aria-hidden="true">☰</span>
+          <h4>pentest-cheatsheet — published</h4>
+          <p>Public, opinionated, kept current.</p>
+          <span class="ach-meta">red · published</span>
+        </article>
+        <article class="ach purple" role="listitem" data-state="done">
+          <span class="ach-icon" aria-hidden="true">⚂</span>
+          <h4>Atomic-Red-Team validation</h4>
+          <p>22 tests in rotation against the home-lab-siem rules — every covered cell has a matching test.</p>
+          <span class="ach-meta">purple · ongoing</span>
+        </article>
+        <article class="ach purple" role="listitem" data-state="done">
+          <span class="ach-icon" aria-hidden="true">⚛</span>
+          <h4>Sigma rule pipeline</h4>
+          <p>Detections decoupled from Wazuh alone — portable across Splunk / Elastic.</p>
+          <span class="ach-meta">purple · v1 shipped</span>
+        </article>
+        <article class="ach purple" role="listitem" data-state="progress">
+          <span class="ach-icon" aria-hidden="true">⚡</span>
+          <h4>red→blue closures</h4>
+          <p>8 closures shipped, 6 more in the backlog. Goal: one new closure per week.</p>
+          <span class="ach-meta">purple · weekly</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- ───────── DETECTION HEATMAP ───────── -->
+    <section id="heatmap" class="section section-team" data-team="blue">
+      <h2><span class="num">10.</span> Detection-engineering activity <span class="team-pill blue">blue · year</span></h2>
+      <p class="section-lead">
+        Rules shipped, atomic tests run, closures documented — week by week, full year. Hand-rolled SVG, hand-curated data. Hover a cell to see what shipped that week.
+      </p>
+
+      <div class="hm-stats">
+        <div class="hm-stat"><span class="hm-stat-n" id="hmTotal">0</span><span class="hm-stat-l">contributions · last 52 weeks</span></div>
+        <div class="hm-stat"><span class="hm-stat-n" id="hmStreak">0</span><span class="hm-stat-l">current streak (weeks)</span></div>
+        <div class="hm-stat"><span class="hm-stat-n" id="hmBest">0</span><span class="hm-stat-l">best week</span></div>
+        <div class="hm-stat"><span class="hm-stat-n" id="hmAvg">0</span><span class="hm-stat-l">median per active week</span></div>
+      </div>
+
+      <div class="hm-wrap">
+        <div class="hm-months" id="hmMonths" aria-hidden="true"></div>
+        <div class="hm-row">
+          <div class="hm-days" aria-hidden="true">
+            <span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span><span></span>
+          </div>
+          <svg class="hm-grid" id="hmGrid" role="img" aria-label="Detection-engineering activity calendar (52 weeks × 7 days)" viewBox="0 0 728 110" xmlns="http://www.w3.org/2000/svg"></svg>
+        </div>
+        <div class="hm-legend" aria-hidden="true">
+          <span>less</span>
+          <i class="hm-l hm-l0"></i><i class="hm-l hm-l1"></i><i class="hm-l hm-l2"></i><i class="hm-l hm-l3"></i><i class="hm-l hm-l4"></i>
+          <span>more</span>
+          <span class="hm-tip" id="hmTip">— hover to inspect</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── STACK ───────── -->
+    <section id="stack" class="section">
+      <h2><span class="num">11.</span> Stack</h2>
+      <div class="stack-grid">
+        <div class="stack-card">
+          <h3>Blue — detect</h3>
+          <ul>
+            <li>Wazuh</li><li>Suricata</li><li>Sysmon</li><li>MISP</li><li>VirusTotal</li><li>FortiGate</li><li>Nessus</li><li>Sigma</li><li>MITRE ATT&amp;CK</li>
+          </ul>
+        </div>
+        <div class="stack-card">
+          <h3>Red — attack</h3>
+          <ul>
+            <li>Burp Suite</li><li>Nmap</li><li>Metasploit</li><li>BloodHound</li><li>Mimikatz</li><li>Impacket</li><li>CrackMapExec</li><li>OSCP path</li>
+          </ul>
+        </div>
+        <div class="stack-card">
+          <h3>Purple — validate</h3>
+          <ul>
+            <li>Atomic Red Team</li><li>Sigma pipeline</li><li>Caldera (study)</li><li>Detection-as-code</li>
+          </ul>
+        </div>
+        <div class="stack-card">
+          <h3>Network &amp; system</h3>
+          <ul>
+            <li>FortiGate VM</li><li>Cisco (CCNA-track)</li><li>VLANs / IPSec</li><li>Linux (Ubuntu / Debian)</li><li>Windows Server</li><li>Active Directory basics</li>
+          </ul>
+        </div>
+        <div class="stack-card">
+          <h3>Dev</h3>
+          <ul>
+            <li>C / C++ (VCL, RAD Studio)</li><li>PHP</li><li>HTML / CSS / JS</li><li>SQL (MySQL)</li><li>Bash</li><li>Python (basics)</li>
+          </ul>
+        </div>
+        <div class="stack-card">
+          <h3>DevOps / data</h3>
+          <ul>
+            <li>Docker / Compose</li><li>Git / GitHub</li><li>QlikView</li><li>WordPress</li><li>Monaco editor</li><li>VMware Workstation</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── CERTS ───────── -->
+    <section id="certs" class="section">
+      <h2><span class="num">12.</span> Certifications</h2>
+      <p class="section-lead">13 certifications — kept current, all with verification links on LinkedIn.</p>
+      <div class="cert-grid">
+        <div class="cert"><h4>Fortinet NSE 1–3</h4><span>Fortinet</span></div>
+        <div class="cert"><h4>Certified Ethical Hacker (CEH essentials)</h4><span>EC-Council</span></div>
+        <div class="cert"><h4>ICSI | CNSS — Cybersecurity Specialist</h4><span>ICSI</span></div>
+        <div class="cert"><h4>CCNA — Routing &amp; Switching track</h4><span>Cisco</span></div>
+        <div class="cert"><h4>Google IT Support</h4><span>Google</span></div>
+        <div class="cert"><h4>Linux Essentials</h4><span>LPI</span></div>
+        <div class="cert"><h4>Network Defense Essentials</h4><span>EC-Council</span></div>
+        <div class="cert"><h4>Cybersecurity Bootcamp</h4><span>Diverse providers</span></div>
+      </div>
+    </section>
+
+    <!-- ───────── CONTACT ───────── -->
+    <section id="contact" class="section contact">
+      <h2><span class="num">13.</span> Get in touch</h2>
+      <p class="section-lead">
+        Recruiting, internship, security side-project, want a second pair of eyes on a SIEM rule — drop me a line.
+      </p>
+      <div class="contact-grid">
+        <a class="contact-card" href="mailto:yassirzahidi8@gmail.com">
+          <span class="c-key">email</span>
+          <span class="c-val">yassirzahidi8@gmail.com</span>
+        </a>
+        <a class="contact-card" href="https://www.linkedin.com/in/yassir-zahidi/" target="_blank" rel="noopener">
+          <span class="c-key">linkedin</span>
+          <span class="c-val">in/yassir-zahidi</span>
+        </a>
+        <a class="contact-card" href="https://github.com/y-zahidi" target="_blank" rel="noopener">
+          <span class="c-key">github</span>
+          <span class="c-val">@y-zahidi</span>
+        </a>
+        <a class="contact-card" href="assets/cv-en.pdf" download>
+          <span class="c-key">cv</span>
+          <span class="c-val">cv-en.pdf · 1 page</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Yassir Zahidi · built with HTML, CSS &amp; a bit of JS · hosted on GitHub Pages</p>
+    <p class="mono">$ exit 0</p>
+    <p class="mono kbd-hint" aria-hidden="true">
+      <kbd>⌘</kbd><kbd>K</kbd> palette · <kbd>:</kbd> cmdline · <kbd>g</kbd><kbd>d</kbd> blue · <kbd>g</kbd><kbd>o</kbd> red · <kbd>g</kbd><kbd>u</kbd> purple · <kbd>t</kbd> theme · <kbd>?</kbd> help
+    </p>
+    <!-- yz{flag1=blue_team_starts_here} — first of three. find them all and you can have a coffee on me. -->
+  </footer>
+
+  <!-- ───────── LIVE OPS WIDGET (sticky bottom-left) ───────── -->
+  <aside class="liveops" id="liveops" aria-label="Live ops widget">
+    <header class="lo-head">
+      <span class="lo-led" aria-hidden="true"></span>
+      <span class="lo-name">yz-lab</span>
+      <button type="button" class="lo-x" id="liveopsX" aria-label="hide live-ops widget" title="hide">–</button>
+    </header>
+    <dl class="lo-rows">
+      <div><dt>now</dt><dd id="loClock">——:——</dd></div>
+      <div><dt>tz</dt><dd>Africa/Casablanca</dd></div>
+      <div><dt>uptime</dt><dd id="loUptime">0s</dd></div>
+      <div><dt>last ioc</dt><dd id="loIoc">—</dd></div>
+      <div><dt>theme</dt><dd id="loTheme">midnight</dd></div>
+      <div><dt>posture</dt><dd><span class="lo-pill blue">blue</span><span class="lo-pill red">red</span><span class="lo-pill purple">purple</span></dd></div>
+    </dl>
+  </aside>
+
+  <!-- ───────── VIM-STYLE CMDLINE (`:` opens) ───────── -->
+  <div class="cmdline" id="cmdline" hidden role="dialog" aria-modal="true" aria-label="vim cmdline">
+    <span class="cl-colon">:</span><input type="text" id="cmdlineInput" autocomplete="off" spellcheck="false" />
+    <span class="cl-hint" id="cmdlineHint">type <code>help</code></span>
+  </div>
+
+  <!-- ───────── WAR-ROOM OVERLAY (Konami unlock) ───────── -->
+  <div class="warroom" id="warroom" hidden aria-hidden="true">
+    <div class="wr-backdrop" data-wr-close></div>
+    <div class="wr-panel" role="dialog" aria-modal="true" aria-label="war-room">
+      <header class="wr-head">
+        <span class="wr-dots"><i></i><i></i><i></i></span>
+        <span class="wr-title">/var/run/warroom · unlocked · flag #2</span>
+        <button type="button" class="wr-x" data-wr-close aria-label="close">×</button>
+      </header>
+      <div class="wr-body">
+        <p class="wr-line"><span class="wr-prompt">root@yz-soc:~#</span> cat /var/run/warroom/flag</p>
+        <p class="wr-flag">YZ{k0n4m1_purple_l00p}</p>
+        <p class="wr-line"><span class="wr-prompt">root@yz-soc:~#</span> ls /var/run/warroom/</p>
+        <ul class="wr-files">
+          <li>flag <span>— you've found 2/3</span></li>
+          <li>hint.txt <span>— the third lives where the recruiters look</span></li>
+          <li>playbook.md <span>— incident-response runbook</span></li>
+        </ul>
+        <p class="wr-line"><span class="wr-prompt">root@yz-soc:~#</span> cat hint.txt</p>
+        <p class="wr-out">flag #1 lives in the page source as an HTML comment.</p>
+        <p class="wr-out">flag #3 lives in the cmdline. press <kbd>:</kbd> then type <code>flag</code>.</p>
+        <p class="wr-line"><span class="wr-prompt">root@yz-soc:~#</span> <span class="wr-cur">_</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Keyboard help modal (toggled with ?) -->
+  <div class="khelp" id="kHelp" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts" hidden>
+    <div class="khelp-backdrop" data-khelp-close></div>
+    <div class="khelp-panel">
+      <header><h3>Keyboard shortcuts</h3><button type="button" class="khelp-x" data-khelp-close aria-label="Close">×</button></header>
+      <div class="khelp-grid">
+        <div><kbd>⌘</kbd><kbd>K</kbd></div><div>open command palette</div>
+        <div><kbd>:</kbd></div><div>open vim cmdline</div>
+        <div><kbd>g</kbd> then <kbd>h</kbd></div><div>jump to top</div>
+        <div><kbd>g</kbd> then <kbd>a</kbd></div><div>about</div>
+        <div><kbd>g</kbd> then <kbd>c</kbd></div><div>case study</div>
+        <div><kbd>g</kbd> then <kbd>d</kbd></div><div>blue — detection coverage</div>
+        <div><kbd>g</kbd> then <kbd>o</kbd></div><div>red — offensive arsenal</div>
+        <div><kbd>g</kbd> then <kbd>u</kbd></div><div>purple — validation loop</div>
+        <div><kbd>g</kbd> then <kbd>p</kbd></div><div>projects</div>
+        <div><kbd>g</kbd> then <kbd>n</kbd></div><div>now</div>
+        <div><kbd>g</kbd> then <kbd>w</kbd></div><div>achievements wall</div>
+        <div><kbd>g</kbd> then <kbd>s</kbd></div><div>stack</div>
+        <div><kbd>g</kbd> then <kbd>r</kbd></div><div>certs</div>
+        <div><kbd>g</kbd> then <kbd>m</kbd></div><div>contact</div>
+        <div><kbd>t</kbd></div><div>cycle theme (dark · midnight · paper · phosphor)</div>
+        <div><kbd>p</kbd></div><div>print / save as PDF</div>
+        <div><kbd>?</kbd></div><div>this help</div>
+        <div class="kh-foot" colspan="2">try the konami code <kbd>↑</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd><kbd>←</kbd><kbd>→</kbd><kbd>b</kbd><kbd>a</kbd></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/main.js" defer></script>
+<script src="assets/counter-fix.js" defer></script>
+</body>
+</html>

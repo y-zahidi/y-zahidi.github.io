@@ -1,0 +1,21 @@
+/* TEAM */
+  Owner: Yassir Zahidi
+  Site: https://y-zahidi.github.io
+  Twitter: -
+  GitHub: @y-zahidi
+  LinkedIn: in/yassir-zahidi
+  From: Morocco
+  Discipline: blue + red + purple — SOC, detection engineering, pentest
+
+/* THANKS */
+  Wazuh, Suricata, Sigma, MITRE ATT&CK, Atomic Red Team
+  TryHackMe, HackTheBox, OffSec, HackTricks
+  ISMO Tétouan
+  Préfecture de Tétouan — internship 02 May → 31 May 2024
+
+/* SITE */
+  Last update: 2026/05
+  Standards: HTML5, CSS3, ES2022
+  Components: vanilla — no framework, no tracker
+  Software: handwritten, GitHub Pages
+  Doctype: HTML5
