@@ -114,9 +114,9 @@ const cmdkTrigger = document.getElementById('cmdkTrigger');
 const ITEMS = [
   { title: 'About',                          hint: 'section',         kind: '#', href: '#about' },
   { title: 'Case study — Tétouan SIEM',      hint: 'section',         kind: '#', href: '#case' },
-  { title: 'Blue — detection coverage',      hint: 'section · blue',   kind: '#', href: '#detect' },
-  { title: 'Red — offensive arsenal',        hint: 'section · red',    kind: '#', href: '#offensive' },
-  { title: 'Purple — validation loop',       hint: 'section · purple', kind: '#', href: '#purple' },
+  { title: 'Detection coverage',          hint: 'section',          kind: '#', href: '#detect' },
+  { title: 'Controlled testing',            hint: 'section',          kind: '#', href: '#offensive' },
+  { title: 'Validation loop',               hint: 'section',          kind: '#', href: '#purple' },
   { title: 'Projects',                       hint: 'section',         kind: '#', href: '#projects' },
   { title: 'Now — what I\'m building',       hint: 'section',         kind: '#', href: '#now' },
   { title: 'Achievements',                   hint: 'section',         kind: '#', href: '#achievements' },
@@ -253,9 +253,9 @@ const ROUTES = {
   h: { kind: 'top' },
   a: { id: '#about' },
   c: { id: '#case' },
-  d: { id: '#detect' },     // blue
-  o: { id: '#offensive' },  // red
-  u: { id: '#purple' },     // purple
+  d: { id: '#detect' },
+  o: { id: '#offensive' },
+  u: { id: '#purple' },
   p: { id: '#projects' },
   n: { id: '#now' },
   w: { id: '#achievements' },
@@ -567,7 +567,7 @@ if (params.has('print') || params.has('cv')) {
   if (p.has('print') || p.has('cv')) return;
 
   const lines = [
-    { t: 'ok',   k: '[ ok  ]', m: 'kernel: yz-soc 6.5.0 · booting blue+red+purple init' },
+    { t: 'ok',   k: '[ ok  ]', m: 'kernel: yz-soc 6.5.0 · booting detect+test+validate init' },
     { t: 'ok',   k: '[ ok  ]', m: 'wazuh-manager.service started · 6213 rules loaded' },
     { t: 'ok',   k: '[ ok  ]', m: 'suricata.service started · 14k+ ETOpen sids' },
     { t: 'ok',   k: '[ ok  ]', m: 'sysmon-collector · logman started' },
@@ -576,7 +576,7 @@ if (params.has('print') || params.has('cv')) {
     { t: 'warn', k: '[warn ]', m: 'lab-segment.dc01 · simulated lsass-dump expected at +30s' },
     { t: 'ok',   k: '[ ok  ]', m: 'atomic-red-team scheduled · 22 tests in rotation' },
     { t: 'ok',   k: '[ ok  ]', m: 'sigma-pipeline · 14 rules compiled → wazuh + splunk' },
-    { t: 'done', k: '[done ]', m: 'soc operational — mttd<60s · mttr<5min · posture: blue+red+purple' },
+    { t: 'done', k: '[done ]', m: 'soc operational — mttd<60s · mttr<5min · posture: detect+test+validate' },
   ];
   boot.hidden = false; boot.removeAttribute('aria-hidden');
   document.body.style.overflow = 'hidden';
@@ -683,15 +683,13 @@ let openCmdline, closeCmdline;
     hint.appendChild(document.createTextNode(s));
   };
   const COMMANDS = {
-    'help':       () => setHint('cmds: theme [name] · about · case · blue · red · purple · projects · now · achievements · stack · certs · contact · cv · print · reset · flag · q'),
+    'help':       () => setHint('cmds: theme [name] · about · case · detect · test · validate · projects · now · achievements · stack · certs · contact · cv · print · reset · flag · q'),
     'theme':      (a) => { if (a && THEMES.includes(a)) applyTheme(a); else cycleTheme(); setHint('theme → ' + currentTheme()); },
     'about':      () => goRoute({ id: '#about' }),
     'case':       () => goRoute({ id: '#case' }),
     'detect':     () => goRoute({ id: '#detect' }),
-    'blue':       () => goRoute({ id: '#detect' }),
-    'offensive':  () => goRoute({ id: '#offensive' }),
-    'red':        () => goRoute({ id: '#offensive' }),
-    'purple':     () => goRoute({ id: '#purple' }),
+    'test':       () => goRoute({ id: '#offensive' }),
+    'validate':   () => goRoute({ id: '#purple' }),
     'projects':   () => goRoute({ id: '#projects' }),
     'now':        () => goRoute({ id: '#now' }),
     'achievements': () => goRoute({ id: '#achievements' }),
@@ -707,7 +705,7 @@ let openCmdline, closeCmdline;
     'compiler':   () => goRoute({ id: '#playground' }),
     'heatmap':    () => goRoute({ id: '#heatmap' }),
     'hm':         () => goRoute({ id: '#heatmap' }),
-    'flag':       () => setHint('YZ{cmdline_3rd_flag_purple_loop_ftw}'),
+    'flag':       () => setHint('YZ{cmdline_3rd_flag_validation_loop}'),
     'ask':        (a) => askTopic(a),
     'reset':      () => { try { ['yz.theme','yz.boot','yz.liveops'].forEach((k) => localStorage.removeItem(k)); } catch (_) {} setHint('reset — reload to replay boot'); },
     'q':          () => closeCmdline(),
@@ -716,21 +714,21 @@ let openCmdline, closeCmdline;
 
   /* ── :ask topic dispatcher ── curated answers, 100% local ── */
   const ASK = {
-    'stack':       'detect: wazuh + suricata + sysmon + sigma · attack: nmap/burp/metasploit/bloodhound/impacket · purple: atomic-red-team + sigma-pipeline · dev: c++/php/js, docker, git',
+    'stack':       'detect: wazuh + suricata + sysmon + sigma · test: nmap/burp/metasploit/bloodhound/impacket · validate: atomic-red-team + sigma-pipeline · dev: c++/php/js, docker, git',
     'oscp':        'oscp track in flight — buffer-overflow refresh + AD chains weekly. lab time clocks ~6 hrs/week. exam date: open.',
     'mttd':        'mttd ~30s on the lab against atomic-red-team baseline. mttr <5min for tier-1 alerts. measured per closure, not assumed.',
     'mttr':        'mttr median <5min in the lab — playbooked alerts auto-enrich (misp + virustotal) before human triage. real production at préfecture: 7min p50.',
-    'internship':  'open. soc · detection · pentest · purple-team. remote / EU / Morocco. inbox: yassirzahidi8@gmail.com.',
-    'internships': 'open. soc · detection · pentest · purple-team. remote / EU / Morocco. inbox: yassirzahidi8@gmail.com.',
+    'internship':  'open. security engineering · detection · controlled testing. remote / EU / Morocco. inbox: yassirzahidi8@gmail.com.',
+    'internships': 'open. security engineering · detection · controlled testing. remote / EU / Morocco. inbox: yassirzahidi8@gmail.com.',
     'available':   'open. start date: open. timezone: Africa/Casablanca but flexible.',
     'salary':      'open — depends on role / scope / stack. happy to discuss after a 1st screen.',
     'cv':          'cv-en.pdf — type :cv to download. one page, dense, no fluff.',
-    'blue':        '14 sigma rules authored, 6213 wazuh rules tuned at préfecture, 13 cybersec certs current, mttd<60s on lab.',
-    'red':         'oscp track + htb/thm boxes weekly + AD attack chains in lab. cheatsheet repo public. self-pentest doc public.',
-    'purple':      '22 atomic-red-team tests in rotation, 8 red→blue closures shipped, validation loop documented per closure.',
+    'detect':      '14 sigma rules authored, 6213 wazuh rules tuned at préfecture, 13 cybersec certs current, mttd<60s on lab.',
+    'test':         'oscp track + htb/thm boxes weekly + AD attack paths in an authorized lab. cheatsheet repo public. validation notes public.',
+    'validate':    '22 authorized validation tests in rotation, 8 finding-to-control closures shipped, validation loop documented per closure.',
     'flag':        'three flags total: source comment · konami war-room · this cmdline. you have :flag from here.',
-    'help':        'topics: stack · oscp · mttd · mttr · internship · available · salary · cv · blue · red · purple · flag',
-    'topics':      'topics: stack · oscp · mttd · mttr · internship · available · salary · cv · blue · red · purple · flag',
+    'help':        'topics: stack · oscp · mttd · mttr · internship · available · salary · cv · detect · test · validate · flag',
+    'topics':      'topics: stack · oscp · mttd · mttr · internship · available · salary · cv · detect · test · validate · flag',
   };
   function askTopic(t) {
     if (!t) { setHint('ask <topic> — try: ' + Object.keys(ASK).slice(0, 6).join(' / ')); return; }
@@ -1377,7 +1375,7 @@ let openCmdline, closeCmdline;
     [8,  3, 'wazuh tuning — false-positive sweep'],
     [13, 1, 'atomic-red-team — t1003.001 closure'],
     [15, 2, 'sigma → wazuh + splunk pipeline shipped'],
-    [16, 1, 'red→blue closure — kerberoast'],
+    [16, 1, 'finding→control closure — kerberoast'],
     [16, 3, 'mitre coverage matrix v1'],
     [22, 4, 'misp + virustotal enrichment'],
     [24, 2, 'oscp lab — buffer overflow refresh'],
@@ -1386,7 +1384,7 @@ let openCmdline, closeCmdline;
     [33, 2, 'incident report — phishing attempt'],
     [35, 0, 'oscp study — no rules shipped'],
     [38, 1, 'home-lab-siem v0.4'],
-    [41, 3, 'red team week — htb pivot box'],
+    [41, 3, 'authorized lab week — HTB pivot path'],
     [44, 4, 'detection-engineering writeup × 3'],
     [47, 2, 'closure — lsass dump comsvcs.dll'],
     [49, 4, 'sigma → kql + suricata transpiler'],
