@@ -53,9 +53,7 @@ The page is designed to make the first screen useful, keep the evidence scannabl
     ├── style.css
     ├── main.js
     ├── favicon.svg
-    ├── og-image.png
-    ├── avatar.jpg
-    └── cv-en.pdf
+    └── og-image.png
 ```
 
 ## Local preview
