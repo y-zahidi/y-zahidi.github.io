@@ -5,13 +5,12 @@
   GitHub: @y-zahidi
   LinkedIn: in/yassir-zahidi
   From: Morocco
-  Discipline: blue + red + purple — SOC, detection engineering, pentest
+  Discipline: adversary-informed security engineering — detection, controlled testing, hardening
 
 /* THANKS */
   Wazuh, Suricata, Sigma, MITRE ATT&CK, Atomic Red Team
   TryHackMe, HackTheBox, OffSec, HackTricks
-  ISMO Tétouan
-  Préfecture de Tétouan — internship 02 May → 31 May 2024
+  Authorized internship environment — 02 May → 31 May 2024
 
 /* SITE */
   Last update: 2026/05

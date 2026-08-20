@@ -2,12 +2,12 @@
   "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
   "basics": {
     "name": "Yassir Zahidi",
-    "label": "Cybersecurity engineer-in-training · blue + red + purple — SOC · detection engineering · pentest",
+    "label": "Cybersecurity engineer-in-training · detection · controlled testing · hardening",
     "image": "https://avatars.githubusercontent.com/u/y-zahidi",
     "email": "yassirzahidi8@gmail.com",
     "phone": "",
     "url": "https://y-zahidi.github.io",
-    "summary": "Specialized Technician in Cybersecurity. I work the seam between blue, red and purple: I build reproducible SIEM labs (Wazuh · Suricata · Sysmon · MISP · FortiGate) and then attack them on purpose with TryHackMe / HackTheBox / atomic-red-team to harden the rules. Open to a SOC / detection-engineering / pentest / purple-team internship.",
+    "summary": "Specialized Technician in Cybersecurity. I build reproducible SIEM labs (Wazuh · Suricata · Sysmon · MISP · FortiGate), exercise them in authorized scenarios, and turn observed gaps into stronger detection and hardening controls. Open to security engineering, detection, controlled testing, or hardening internships.",
     "location": {
       "countryCode": "MA",
       "region": "Morocco"
@@ -20,10 +20,10 @@
   },
   "work": [
     {
-      "name": "Préfecture de Tétouan · Ministère de l'Intérieur (SSIC)",
+      "name": "Authorized ministry-network environment",
       "position": "Cybersecurity Intern",
       "url": "",
-      "location": "Tétouan, Morocco",
+      "location": "Morocco",
       "startDate": "2024-05-02",
       "endDate":   "2024-05-31",
       "summary": "Designed and deployed a multi-layer SIEM on a real ministry network: Wazuh + Suricata + Sysmon + MISP + VirusTotal, integrated with the FortiGate perimeter and Nessus weekly vuln scans.",
@@ -38,7 +38,7 @@
     {
       "name": "ALTEN Maroc",
       "position": "Engineering intern (digital twin)",
-      "location": "Tétouan, Morocco",
+      "location": "Morocco",
       "startDate": "2023-08-01",
       "endDate":   "2023-09-15",
       "summary": "Worked on the digital-twin pipeline for an industrial client.",
@@ -74,11 +74,11 @@
     { "name": "Cybersecurity Bootcamp",           "issuer": "Diverse"    }
   ],
   "skills": [
-    { "name": "Blue — SIEM / detection",   "level": "applied",     "keywords": ["Wazuh", "Suricata", "Sysmon", "MITRE ATT&CK", "Sigma", "Atomic Red Team"] },
+    { "name": "Detection engineering",        "level": "applied",     "keywords": ["Wazuh", "Suricata", "Sysmon", "MITRE ATT&CK", "Sigma", "Atomic Red Team"] },
     { "name": "Threat intel",             "level": "intermediate","keywords": ["MISP", "VirusTotal", "OpenCTI", "CIRCL", "abuse.ch"] },
     { "name": "Perimeter / network",      "level": "intermediate","keywords": ["FortiGate", "Nessus", "VLAN", "IPSec", "CCNA-track"] },
-    { "name": "Red — pentest",            "level": "intermediate","keywords": ["Nmap", "Burp Suite", "Metasploit", "Bloodhound", "Mimikatz", "CrackMapExec", "Impacket", "OSCP path"] },
-    { "name": "Purple — validation loop", "level": "applied",     "keywords": ["Atomic Red Team", "Sigma", "Caldera-style adversary emulation", "Detection-as-code"] },
+    { "name": "Controlled testing",        "level": "intermediate","keywords": ["Nmap", "Burp Suite", "Metasploit", "Bloodhound", "Mimikatz", "CrackMapExec", "Impacket", "OSCP path"] },
+    { "name": "Validation loop",            "level": "applied",     "keywords": ["Atomic Red Team", "Sigma", "Caldera-style adversary emulation", "Detection-as-code"] },
     { "name": "OS / system",        "level": "applied",     "keywords": ["Linux (Debian / Ubuntu)", "Windows Server", "Active Directory"] },
     { "name": "Dev",                "level": "applied",     "keywords": ["C / C++ (VCL)", "PHP", "HTML / CSS / JS", "MySQL", "Bash", "Python (basics)"] },
     { "name": "DevOps / data",      "level": "applied",     "keywords": ["Docker / Compose", "Git / GitHub", "QlikView", "WordPress", "VMware Workstation"] }
@@ -91,7 +91,7 @@
   "projects": [
     {
       "name": "home-lab-siem",
-      "description": "Reproducible SIEM lab built around the architecture deployed at the Préfecture de Tétouan. docker compose up → Wazuh + Suricata + Sysmon + MISP online in ~3 minutes.",
+      "description": "Reproducible SIEM lab built around an authorized ministry-network deployment. docker compose up → Wazuh + Suricata + Sysmon + MISP online in ~3 minutes.",
       "url": "https://github.com/y-zahidi/home-lab-siem",
       "keywords": ["Wazuh", "Suricata", "Sysmon", "MISP", "FortiGate", "Nessus", "Docker"]
     },
