@@ -89,6 +89,12 @@
   ],
   "projects": [
     {
+      "name": "DECEPTR-UNIFIED",
+      "description": "Unified cyberdeception, DFIR, threat-intelligence, and controlled-validation platform presented as a sanitized public case file with architecture and trust-boundary evidence.",
+      "url": "https://github.com/y-zahidi/DECEPTR-UNIFIED",
+      "keywords": ["Cyberdeception", "DFIR", "CTI", "MITRE ATT&CK", "Validation"]
+    },
+    {
       "name": "home-lab-siem",
       "description": "Reproducible SIEM lab built around an authorized ministry-network deployment. docker compose up → Wazuh + Suricata + Sysmon + MISP online in ~3 minutes.",
       "url": "https://github.com/y-zahidi/home-lab-siem",
@@ -136,6 +142,6 @@
     "version":   "v1.0.0",
     "lastModified": "2026-05-07",
     "availability": "open — remote / EU / Morocco · respond < 24h",
-    "interests": ["detection engineering", "pentest / red-team", "purple-team validation", "DevSecOps", "SIEM internals", "adversary emulation"]
+    "interests": ["detection engineering", "controlled testing", "adversary-informed validation", "DevSecOps", "SIEM internals", "adversary emulation"]
   }
 }
