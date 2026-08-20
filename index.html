@@ -49,7 +49,7 @@
   <link rel="dns-prefetch" href="https://img.shields.io" />
   <link rel="preload" as="image" href="assets/og.svg" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/style.css" />
+  <link rel="stylesheet" href="assets/style.css?v=10" />
 
   <!-- Structured data — schema.org Person + WebSite -->
   <script type="application/ld+json">
@@ -224,7 +224,7 @@ yz-soc · v3.0 · evidence-led security engineering
               <p><span class="prompt">$</span> <span class="typed" data-typed="stack --short"></span></p>
               <p class="out" data-typed="wazuh · suricata · sysmon · misp · fortigate · nessus · burp · nmap · metasploit"></p>
               <p><span class="prompt">$</span> <span class="typed" data-typed="shipped --count"></span></p>
-              <p class="out" data-typed="6 production projects · 13 certs · 1 SIEM deployed at the Préfecture de Tétouan"></p>
+              <p class="out" data-typed="4 security case files · 13 certs · 1 SIEM deployed at the Préfecture de Tétouan"></p>
               <p><span class="prompt">$</span> <span class="typed" data-typed="looking_for"></span></p>
               <p class="out" data-typed="security engineering / detection / controlled testing internship — open"><span class="cursor">&#9608;</span></p>
             </div>
@@ -245,10 +245,10 @@ yz-soc · v3.0 · evidence-led security engineering
     <!-- ───────── STATS ───────── -->
     <section class="stats-strip" aria-label="key numbers">
       <div class="stats-grid">
-        <div class="stat"><span class="stat-num" data-count="6">0</span><span class="stat-label">production projects shipped</span></div>
+        <div class="stat"><span class="stat-num" data-count="4">0</span><span class="stat-label">security case files</span></div>
         <div class="stat"><span class="stat-num" data-count="13">0</span><span class="stat-label">cybersecurity certifications</span></div>
         <div class="stat"><span class="stat-num" data-count="50" data-suffix="+">0</span><span class="stat-label">incidents triaged at ALTEN N1/N2</span></div>
-        <div class="stat"><span class="stat-num" data-count="68" data-suffix="k">0</span><span class="stat-label">records in water-stress warehouse</span></div>
+        <div class="stat"><span class="stat-num" data-count="1">0</span><span class="stat-label">SIEM deployment completed</span></div>
         <div class="stat"><span class="stat-num" data-count="3" data-prefix="~" data-suffix="min">0</span><span class="stat-label">to spin up the SIEM lab</span></div>
       </div>
     </section>
@@ -550,22 +550,27 @@ yz-soc · v3.0 · evidence-led security engineering
       <h2><span class="num">07.</span> Security case files</h2>
       <p class="section-lead">The primary portfolio evidence: architecture, telemetry, controlled scenarios, forensic context, and the engineering decisions that follow. Full implementations remain private where appropriate.</p>
 
-      <div class="projects">
-        <article class="proj featured">
-          <div class="proj-img">
-            <img src="https://raw.githubusercontent.com/y-zahidi/DECEPTR-UNIFIED/main/docs/diagrams/deceptr-architecture-transparent.png" alt="DECEPTR-UNIFIED architecture diagram" loading="lazy" />
-            <span class="badge">Cybersecurity</span>
+      <article class="case-spotlight">
+        <div class="spotlight-media">
+          <div class="spotlight-kicker">01 / flagship case file</div>
+          <img src="https://raw.githubusercontent.com/y-zahidi/DECEPTR-UNIFIED/main/docs/diagrams/deceptr-architecture-transparent.png" alt="DECEPTR-UNIFIED architecture diagram" loading="lazy" />
+          <div class="spotlight-caption"><span>architecture</span><span>trust boundaries</span><span>forensic signal</span></div>
+        </div>
+        <div class="spotlight-body">
+          <p class="spotlight-meta">DECEPTR-UNIFIED · public evidence / private implementation</p>
+          <h3>From deceptive surface to forensic signal.</h3>
+          <p class="spotlight-tagline">A platform design that connects deception, intelligence correlation, forensic context, and controlled validation without exposing private source code.</p>
+          <div class="spotlight-facts">
+            <div><span>Scope</span><strong>Cyberdeception · DFIR · CTI</strong></div>
+            <div><span>Proof</span><strong>Architecture · trust boundaries · sanitized patterns</strong></div>
+            <div><span>Outcome</span><strong>Observed gaps become reviewable engineering decisions</strong></div>
           </div>
-          <div class="proj-body">
-            <h3>DECEPTR-UNIFIED</h3>
-            <p class="proj-tagline">Cyberdeception, forensic context, intelligence correlation, and controlled validation in one platform design.</p>
-            <p>A public case file for a private implementation, with trust boundaries, architecture, sanitized configuration patterns, and the reasoning behind the system.</p>
-            <ul class="tags"><li>Cyberdeception</li><li>DFIR</li><li>CTI</li><li>Validation</li><li>Architecture</li></ul>
-            <div class="proj-links"><a href="https://github.com/y-zahidi/DECEPTR-UNIFIED" target="_blank" rel="noopener">Case file →</a></div>
-          </div>
-        </article>
+          <div class="proj-links"><a href="https://github.com/y-zahidi/DECEPTR-UNIFIED" target="_blank" rel="noopener">Open flagship case file →</a></div>
+        </div>
+      </article>
 
-        <article class="proj featured">
+      <div class="projects">
+        <article class="proj">
           <div class="proj-img">
             <img src="screenshots/home-lab-siem.png" alt="Wazuh dashboard login" loading="lazy" />
             <span class="badge">Detection lab</span>
@@ -602,7 +607,7 @@ yz-soc · v3.0 · evidence-led security engineering
 
       <div class="broader-work">
         <h3>Broader systems work</h3>
-        <p>Supporting repositories demonstrate full-stack delivery, data engineering, accessibility, business workflows, and Linux operations.</p>
+        <p>Supporting repositories demonstrate full-stack delivery, data engineering, accessibility, business workflows, and Linux operations. The water-stress warehouse contains <strong>68k records</strong>; it stays here as proof of broader systems delivery, not as the primary security signal.</p>
         <p><a href="https://github.com/y-zahidi/HTMLCamp" target="_blank" rel="noopener">HTMLCamp</a> · <a href="https://github.com/y-zahidi/water-stress-morocco-analytics" target="_blank" rel="noopener">water-stress-morocco-analytics</a> · <a href="https://github.com/y-zahidi/FacturationPro-Enterprise" target="_blank" rel="noopener">FacturationPro-Enterprise</a> · <a href="https://github.com/y-zahidi/Rabat-Cultural-Website" target="_blank" rel="noopener">Rabat Cultural Website</a></p>
       </div>
     </section>
