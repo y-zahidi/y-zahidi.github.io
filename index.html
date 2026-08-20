@@ -235,10 +235,17 @@ yz-soc · v3.0 · evidence-led security engineering
             <a class="btn ghost" href="https://www.linkedin.com/in/yassir-zahidi/" target="_blank" rel="noopener">LinkedIn →</a>
           </div>
         </div>
-        <div class="hero-photo">
-          <img src="https://github.com/y-zahidi.png?size=400" alt="Yassir Zahidi" loading="eager" />
-          <div class="photo-ring"></div>
-        </div>
+        <aside class="hero-proof" aria-label="Portfolio focus">
+          <p class="hero-proof-kicker">FIELD NOTE / 01</p>
+          <h2>Evidence over claims.</h2>
+          <p>Public case files show the architecture, validation path, and engineering decisions. Private implementations stay private.</p>
+          <dl>
+            <div><dt>Primary signal</dt><dd>DECEPTR-UNIFIED</dd></div>
+            <div><dt>Security spine</dt><dd>Wazuh · Suricata · Sysmon</dd></div>
+            <div><dt>Working method</dt><dd>detect → test → harden</dd></div>
+          </dl>
+          <a href="#projects">Open the case files →</a>
+        </aside>
       </div>
     </section>
 
@@ -830,23 +837,6 @@ yz-soc · v3.0 · evidence-led security engineering
       <kbd>⌘</kbd><kbd>K</kbd> palette · <kbd>:</kbd> cmdline · <kbd>g</kbd><kbd>d</kbd> detect · <kbd>g</kbd><kbd>o</kbd> test · <kbd>g</kbd><kbd>u</kbd> validate · <kbd>t</kbd> theme · <kbd>?</kbd> help
     </p>
   </footer>
-
-  <!-- ───────── LIVE OPS WIDGET (sticky bottom-left) ───────── -->
-  <aside class="liveops" id="liveops" aria-label="Live ops widget">
-    <header class="lo-head">
-      <span class="lo-led" aria-hidden="true"></span>
-      <span class="lo-name">yz-lab</span>
-      <button type="button" class="lo-x" id="liveopsX" aria-label="hide live-ops widget" title="hide">–</button>
-    </header>
-    <dl class="lo-rows">
-      <div><dt>now</dt><dd id="loClock">——:——</dd></div>
-      <div><dt>tz</dt><dd>Africa/Casablanca</dd></div>
-      <div><dt>uptime</dt><dd id="loUptime">0s</dd></div>
-      <div><dt>last ioc</dt><dd id="loIoc">—</dd></div>
-      <div><dt>theme</dt><dd id="loTheme">midnight</dd></div>
-      <div><dt>mode</dt><dd><span class="lo-pill blue">evidence-led</span><span class="lo-pill red">authorized</span><span class="lo-pill purple">validated</span></dd></div>
-    </dl>
-  </aside>
 
   <!-- ───────── VIM-STYLE CMDLINE (`:` opens) ───────── -->
   <div class="cmdline" id="cmdline" hidden role="dialog" aria-modal="true" aria-label="vim cmdline">
